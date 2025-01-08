@@ -1,0 +1,32 @@
+############# DATA SOURCES
+
+ai-pipeline-datasources
+
+# Virtual Environments
+ai-pipeline-datasources/papers-with-code/myenv
+ai-pipeline-datasources/open-ml/myenv
+ai-pipeline-datasources/kaggle-api/myenv
+ai-pipeline-datasources/ChatGPT/myenv
+ai-pipeline-datasources/data-extraction-pwc/myenv
+
+# .env files
+ai-pipeline-datasources/ChatGPT/.env
+
+# Temp files
+papers-with-code/__pycache__
+open-ml/__pycache__
+ChatGPT/__pycache__
+
+# Misc
+data/
+screenlog.0
+papers-with-code/paper-ids.json
+
+
+papers-with-code/myenv
+huggingface/myenv
+
+
+
+
+
