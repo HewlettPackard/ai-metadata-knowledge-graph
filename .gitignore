@@ -1,6 +1,8 @@
 ############# DATA SOURCES
 
 ai-pipeline-datasources
+ai-pipeline-knowledge-graph
+aimkg_UI
 
 # Virtual Environments
 ai-pipeline-datasources/papers-with-code/myenv

@@ -168,6 +168,12 @@ The concepts from Papers-with-code, OpenML and Huggingface are mapped to CMO to 
 ##### 5.Semantic Enrichments
 In order to enable contextually relevant queries, semantic enrichments are performed on the data entities. For example, in the figure below, the user searched for "Image Detection" task and its pipeline. It can be noticed that both "2D Object Detection" and "3D object Detection" are returned as results which do not explicitly have the name "image" in them. Such semantic enhancements are done for tasks, datasets and models. The methods and techniques are detailed [here](semantic-enrichments/semantics_readme.md)
 
+<div style="flex: 90%; padding: 5px; text-align: center;">
+    <p style="margin-bottom: 5px; text-align: center; font-style: italic; font-weight: bold;">
+    </p>
+    <br>
+    <img src="figures/sample_query.png" alt="CMO" style="width:90%;">
+</div>>
 
 ##### 6. Data Ingestion
 The data gathered and semantically enriched are then loaded to Neo4j Graph DB to perform serach and recommendation. The steps to set-up the graph DB are mentioned in the section [Set Up Guide](#aimkg-set-up-guide)
