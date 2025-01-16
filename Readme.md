@@ -2,7 +2,7 @@
 <p align="justify">
 The emergence of advanced Artificial Intelligence (AI) models has driven the development of frameworks and approaches that focus on automating model training and hyperparameter tuning of end-to-end AI pipelines. However, other crucial stages of these pipelines such as dataset selection, feature engineering, and model optimization for deployment have received less attention. Improving efficiency of end-to-end AI pipelines requires metadata of past executions of AI pipelines and all their stages. Regenerating metadata history by re-executing existing AI pipelines is computationally challenging and impractical. To address this issue, we propose to source AI pipeline metadata from open-source platforms like Papers-with-Code, OpenML, and Hugging Face. However, integrating and unifying the varying terminologies and data formats from these diverse sources is a challenge. In this paper, we present a solution by introducing Common Metadata Ontology (CMO) which is used to construct an extensive AI Pipeline Metadata Knowledge Graph (AIMKG) consisting of 1.6 million pipelines. Through semantic enhancements, the pipeline metadata in AIMKG is also enriched for downstream tasks such as search and recommendation of AI pipelines. We perform quantitative and qualitative evaluations on AIMKG to search and recommend relevant pipelines to user query. For quantitative evaluation we propose a custom aggregation model that outperforms other baselines by achieving a retrieval accuracy (R@1) of 76.3%. Our qualitative analysis shows that  AIMKG-based recommender retrieved relevant pipelines in 78% of test cases compared to the state-of-the-art MLSchema based recommender which retrieved relevant responses in 51% of the cases. AIMKG serves as an atlas for navigating the evolving AI landscape, providing practitioners with a comprehensive factsheet for their applications. It guides AI pipeline optimization, offers insights and recommendations for improving AI pipelines, and serves as a foundation for data mining and analysis of evolving AI workflows.
  </p>
- 
+
 <br>
 
 <div style="text-align: center; margin-bottom: 20px;">
@@ -95,7 +95,6 @@ Once the neo4j is up and running with AIMKG, the following steps will open-up a 
 
 
 
-
 ### Full Paper
 The full paper along with supplementary materials can be found here[Constructing a metadata knowledge graph as an atlas for demystifying AI pipeline optimization](https://www.frontiersin.org/journals/big-data/articles/10.3389/fdata.2024.1476506/full)
 
@@ -123,15 +122,20 @@ The construction of AIMKG is described in the figure below. The construction inv
 
 
 #### 1. Data Collection
-* **Papers-with-code:** Papers-with-Code provides extensive metadata for research papers and associated code repositories, encompassing over 1 million entries. The metadata covers various components and stages of AI pipelines described in the papers. Through their API, Papers-with-Code offers metadata including PDF URLs, GitHub repository links, task details, dataset information, methods employed, and evaluation metrics/results. While not all stages of metadata are available for every paper through the API, the information can still be obtained by referring to the research papers and their code repositories.
 
-* **OpenML:**OpenML provides metadata on machine learning pipelines logged by users, offering detailed information on tasks, datasets, flows, runs with parameter settings, and evaluations. OpenML encompasses eight major task types executed on various datasets, resulting in 1,600 unique tasks. For each task, most recent 500 runs have been collected which amounts to a total of 330,000 runs. 
+* **Papers-with-code:** <p align="justify"> Papers-with-Code provides extensive metadata for research papers and associated code repositories, encompassing over 1 million entries. The metadata covers various components and stages of AI pipelines described in the papers. Through their API, Papers-with-Code offers metadata including PDF URLs, GitHub repository links, task details, dataset information, methods employed, and evaluation metrics/results. While not all stages of metadata are available for every paper through the API, the information can still be obtained by referring to the research papers and their code repositories. </p>
 
-* **Huggingface:**Huggingface is a model hub that offers users access to numerous pretrained models. It covers a wide range of tasks, including computer vision, natural language processing, tabular data, reinforcement learning, and multimodal learning. Huggingface provides model-centric information, along with datasets and evaluations, enabling the construction of complete pipelines. Currently, approximately 50,000 pipelines have been collected from Huggingface. 
+* **OpenML:** <p align="justify"> OpenML provides metadata on machine learning pipelines logged by users, offering detailed information on tasks, datasets, flows, runs with parameter settings, and evaluations. OpenML encompasses eight major task types executed on various datasets, resulting in 1,600 unique tasks. For each task, most recent 500 runs have been collected which amounts to a total of 330,000 runs. </p>
+
+* **Huggingface:** <p align="justify"> Huggingface is a model hub that offers users access to numerous pretrained models. It covers a wide range of tasks, including computer vision, natural language processing, tabular data, reinforcement learning, and multimodal learning. Huggingface provides model-centric information, along with datasets and evaluations, enabling the construction of complete pipelines. Currently, approximately 50,000 pipelines have been collected from Huggingface. </p>
 
 
 #### 2. Exploratory Data Analysis
+<p align="justify">
 The exploratory data analysis of collected data showed different data structures and varying nomeclatures to denote similar concepts. For example, the concept model is referred is methods in Papers-with-code, flow in OpenML and models in Huggingface.
+</p>
+
+<br>
 
 <div style="display: flex; flex-wrap: wrap;">
   <div style="flex: 40%; padding: 5px; text-align: center;">
@@ -159,8 +163,9 @@ The exploratory data analysis of collected data showed different data structures
 
 
 #### 3. Common Metadata Ontology
+<p align="justify">
 The data collected from above mentioned sources consists of [different nomenclature and data structures](ai-pipeline-datasources/readme.md). In order to unify them, Common Metadata Ontology (CMO) was designed based on the principles of [Common Metadata Framework (CMF)](https://github.com/HewlettPackard/cmf) which follows a pipeline-centric framework. MLFlow, which follows a model-centric approach will require separate instantiation of each model even if they are being executed for the same pipeline, say, Entity Extraction from Semi-Structed documents. CMF encompasses all the models and datasets of a pipeline under single instantiation enabling search of best execution path. The overview of CMO can be found below and the details can be found at [common-metadata-ontology](common-metadata-ontology/readme.md) folder
-
+</p>
 
 <div style="flex: 90%; padding: 5px; text-align: center;">
     <p style="margin-bottom: 5px; text-align: center; font-style: italic; font-weight: bold;">Overview of Common Metadata Ontology</p>
@@ -173,7 +178,9 @@ The data collected from above mentioned sources consists of [different nomenclat
 The concepts from Papers-with-code, OpenML and Huggingface are mapped to CMO to construct AIMKG. The details of mapping of each sources to Common Metadata Ontology can be found in [mapping](mapping/mapping_readme.md) folder.
 
 #### 5.Semantic Enrichments
-In order to enable contextually relevant queries, semantic enrichments are performed on the data entities. For example, in the figure below, the user searched for "Image Detection" task and its pipeline. It can be noticed that both "2D Object Detection" and "3D object Detection" are returned as results which do not explicitly have the name "image" in them. Such semantic enhancements are done for tasks, datasets and models. The methods and techniques are detailed [here](semantic-enrichments/semantics_readme.md)
+<p align="justify">
+In order to enable contextually relevant queries, semantic enrichments are performed on the data entities. For example, in the figure below, the user searched for "Image Detection" task and its pipeline. It can be noticed that both "2D Object Detection" and "3D object Detection" are returned as results which do not explicitly have the name "image" in them. Such semantic enhancements are done for tasks, datasets and models. The methods and techniques are detailed [here](semantic-enrichments/semantics_readme.md) 
+</p>
 
 <div style="flex: 90%; padding: 5px; text-align: center;">
     <p style="margin-bottom: 5px; text-align: center; font-style: italic; font-weight: bold;">
@@ -186,7 +193,6 @@ In order to enable contextually relevant queries, semantic enrichments are perfo
 The data gathered and semantically enriched are then loaded to Neo4j Graph DB to perform serach and recommendation. The steps to set-up the graph DB are mentioned in the section [Set Up Guide](#aimkg-set-up-guide)
 
 
-
 ## Publications
-* Venkataramanan, Revathy, Aalap Tripathy, Tarun Kumar, Sergey Serebryakov, Annmary Justine, Arpit Shah, Suparna Bhattacharya et al. "Constructing a Metadata Knowledge Graph as an atlas for demystifying AI Pipeline optimization." Frontiers in Big Data 7: 1476506. [Link to the paper](https://www.frontiersin.org/journals/big-data/articles/10.3389/fdata.2024.1476506/full)
-* Venkataramanan, Revathy, Aalap Tripathy, Martin Foltin, Hong Yung Yip, Annmary Justine, and Amit Sheth. "Knowledge graph empowered machine learning pipelines for improved efficiency, reusability, and explainability." IEEE Internet Computing 27, no. 1 (2023): 81-88. [Link to the paper](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=10044293&casa_token=gZ8lwivSW1oAAAAA:5390SDEkYDpck4EduA3iUG6fO5Vdbi3WRcyTpJTv0yz_lliAb8xurwH3z2SvlOzqTT932dKPvfk&tag=1)
+* <p align="justify"> Venkataramanan, Revathy, Aalap Tripathy, Tarun Kumar, Sergey Serebryakov, Annmary Justine, Arpit Shah, Suparna Bhattacharya et al. "Constructing a Metadata Knowledge Graph as an atlas for demystifying AI Pipeline optimization." Frontiers in Big Data 7: 1476506. [Link to the paper](https://www.frontiersin.org/journals/big-data/articles/10.3389/fdata.2024.1476506/full) </p>
+* <p align="justify"> Venkataramanan, Revathy, Aalap Tripathy, Martin Foltin, Hong Yung Yip, Annmary Justine, and Amit Sheth. "Knowledge graph empowered machine learning pipelines for improved efficiency, reusability, and explainability." IEEE Internet Computing 27, no. 1 (2023): 81-88. [Link to the paper](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=10044293&casa_token=gZ8lwivSW1oAAAAA:5390SDEkYDpck4EduA3iUG6fO5Vdbi3WRcyTpJTv0yz_lliAb8xurwH3z2SvlOzqTT932dKPvfk&tag=1) </p>
