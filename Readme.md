@@ -136,25 +136,29 @@ The exploratory data analysis of collected data showed different data structures
 </p>
 
 <br>
+<table>
+  <tr>
+    <td align="center">
+      <p><strong><i>Graph Data Model: Papers-with-code</i></strong></p>
+      <img src="figures/gdm_pwc.svg" alt="Image 1" width="200">
+    </td>
+    <td align="center">
+      <p><strong><i>Graph Data Model: OpenML</i></strong></p>
+      <img src="figures/gdm_openml.svg" alt="Image 2" width="200">
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <p><strong><i>Graph Data Model: Common Metadata Framework</i></strong></p>
+      <img src="figures/gdm_cmf.svg" alt="Image 3" width="200">
+    </td>
+    <td align="center">
+      <p><strong><i>Graph Data Model: Huggingface</i></strong></p>
+      <img src="figures/gdm_hf.svg" alt="Image 4" width="200">
+    </td>
+  </tr>
+</table>
 
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: center;">
-  <div>
-    <p style="margin-bottom: 10px; font-style: italic; font-weight: bold;">Graph Data Model: Papers-with-code</p>
-    <img src="figures/gdm_pwc.svg" alt="Graph Data Model: Papers-with-code" style="width: 80%;">
-  </div>
-  <div>
-    <p style="margin-bottom: 10px; font-style: italic; font-weight: bold;">Graph Data Model: OpenML</p>
-    <img src="figures/gdm_openml.svg" alt="Graph Data Model: OpenML" style="width: 80%;">
-  </div>
-  <div>
-    <p style="margin-bottom: 10px; font-style: italic; font-weight: bold;">Graph Data Model: Common Metadata Framework</p>
-    <img src="figures/gdm_cmf.svg" alt="Graph Data Model: Common Metadata Framework" style="width: 80%;">
-  </div>
-  <div>
-    <p style="margin-bottom: 10px; font-style: italic; font-weight: bold;">Graph Data Model: Huggingface</p>
-    <img src="figures/gdm_hf.svg" alt="Graph Data Model: Huggingface" style="width: 80%;">
-  </div>
-</div>
 
 
 
