@@ -1,0 +1,6 @@
+Flask
+neo4j
+python-dotenv
+pandas
+sentence-transformers
+torch

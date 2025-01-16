@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIMKG</title>
+    <!-- Semantic UI CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <!-- Menu Bar Container -->
+    <div class="ui pointing menu">
+        <a class="active item">
+            Recommendation
+        </a>
+        <a class="item">
+            Search
+        </a>
+    </div>
+    <!--  Main Container -->
+    <div id="container" class="ui grid">
+        <div id="left-panel" class="four wide column">
+            <!-- Input Pane with right-aligned labels and input fields -->
+            <div id="input-pane" class="ui segment">
+                <form id="query-form" class="ui form">
+                    <div class="field">
+                        <label for="dataset">Dataset</label>
+                        <input type="text" id="dataset" name="dataset" placeholder="Enter dataset name...">
+                    </div>
+                    <div class="field">
+                        <label for="task">Task</label>
+                        <input type="text" id="task" name="task" placeholder="Enter task...">
+                    </div>
+                    <div class="field">
+                        <label for="model">Model</label>
+                        <input type="text" id="model" name="model" placeholder="Enter model...">
+                    </div>
+                    <div class="field">
+                        <label for="pipeline">Pipeline</label>
+                        <textarea id="pipeline" name="pipeline" placeholder="Describe your pipeline in natural language..."></textarea>
+                    </div>
+                    <button type="button" class="ui primary button" onclick="submitQuery()">Submit</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Right panel --> 
+        <div id="right-panel" class="twelve wide column">
+            <div class="ui top attached tabular menu">
+                <a class="item active" data-tab="graph-tab" id="defaultOpen">Graph</a>
+                <a class="item" data-tab="table-tab">Table</a>
+            </div>
+            <div id="graph-tab" class="ui bottom attached tab segment active">
+                <svg id="graph"></svg>
+            </div>
+            <div id="table-tab" class="ui bottom attached tab segment">
+                <div id="table-container"></div>
+            </div>
+        </div>
+
+        <!-- Floating Card for Node Details -->
+        <div class="ui card" id="node-card" style="display: none; position: absolute; right: 20px; top: 20px; z-index: 1000; max-width: 300px; overflow-wrap: break-word;">
+            <div class="content">
+                <div class="header" id="card-title">Node Label</div> <!-- Title dynamically updated -->
+            </div>
+            <div class="content">
+                <div id="card-content">
+                    <!-- Property entries will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- Semantic UI JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="/static/js/graph.js"></script>
+    <script src="/static/js/table.js"></script>
+
+    <script>
+        function submitQuery() {
+            const form = document.getElementById('query-form');
+            const formData = new FormData(form);
+
+            fetch('/query', {
+                method: 'POST',
+                body: JSON.stringify({
+                    dataset: formData.get('dataset'),
+                    task: formData.get('task'),
+                    model: formData.get('model'),
+                    pipeline: formData.get('pipeline')
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                renderGraph(data.nodes, data.links);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+
+        // Initialize Semantic UI tabs
+        $(document).ready(function() {
+            $('.menu .item').tab();
+        });
+    </script>
+</body>
+</html>

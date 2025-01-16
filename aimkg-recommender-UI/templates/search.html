@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <style>
+
+    </style>
+</head>
+<body>
+    <div id='title-element' class="ui top attached segment">
+        <h3>AI Pipeline Metadata Knowledge Graph</h3> 
+    </div>
+    <div id="container" class="ui grid">
+        <div id="left-panel" class="four wide column">
+            <div id="input-pane" class="ui segment">
+                <div class="ui pointing menu">
+                    <a href="/recommendation" class="item">Recommendation</a>
+                    <a href="/search" class="active item">Search</a>
+                </div>
+                <form id="query-form" class="ui form">
+                    <div class="field">
+                        <label for="dataset">Dataset</label>
+                        <select id="dataset-dropdown" name="dataset" class="ui search dropdown">
+                            <option value="None" selected disabled>Select a Dataset</option>
+                            <!-- Populate dataset dropdown using Jinja2 -->
+                            {% for dataset in dropdown_dataset %}
+                                <option value="{{ dataset }}">{{ dataset }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="task">Task</label>
+                        <select id="task-dropdown" name="task" class="ui search dropdown">
+                            <option value="None" selected disabled>Select a Task</option>
+                            <!-- Populate dropdown using Jinja2 -->
+                            {% for task in dropdown_task %}
+                                <option value="{{ task }}">{{ task }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="model">Model</label>
+                        <select id="model-dropdown" name="model" class="ui search dropdown">
+                            <option value="None" selected disabled>Select a Model</option>
+                            <!-- Populate dropdown using Jinja2 -->
+                            {% for model in dropdown_model %}
+                                <option value="{{ model }}">{{ model }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button id='submit_btn' type="button" class="mini ui primary button" onclick="submitSearchQuery({type: 'OR'})">Search</button>
+                    <!-- <button type="button" class="mini ui right attached button" onclick="submitSearchQuery({type: 'AND'})">AND Search</button> -->
+                    <div class="ui horizontal divider">OR</div>
+                    <div class="field">
+                        <label for="cypher_query">CYPHER Query</label>
+                        <textarea id="cypher-query" name="cyper query">MATCH (a:Artifact)-[r3]-(e:Execution)-[r4]-(s:Stage)-[r5]-(p:Pipeline)-[r6]-(t:Task{category:'generation', modality:'image'}) WITH a,e,s,p,t,r3,r4,r5,r6 MATCH (d:Dataset)-[r1]-(a)-[r2]-(m:Model) RETURN d, a, m, e, s, p, t, r1, r2, r3,r4, r5, r6 LIMIT 300
+                            </textarea>
+                    </div>
+                    <button type="button" class="mini ui primary button" onclick="submitSearchCypherQuery()">Submit</button>
+
+                </form>
+            </div>
+        </div>
+
+        <!--Result Panel-->
+        <div id="right-panel" class="twelve wide column">
+            <div id="result-segment" class="ui segment">
+            </div>
+        </div>
+
+        <!-- Loading Dialog Box -->
+        <div id="loading-dialog" class="loading-dialog hidden">
+            <div class="loading-content">
+                <div class="ui active inline loader"></div> <!-- Loader from Semantic UI -->
+                <span>Computing results...</span>
+            </div>
+        </div>
+            
+        <!-- Floating Card for Node Details -->
+        <div class="ui card" id="node-card" style="display: none; position: absolute; left: 380px; top:60px; z-index: 1000; max-width: 300px; overflow-wrap: break-word;">
+            <div class="content">
+                <div class="header" id="card-title">Node Label</div> <!-- Title dynamically updated -->
+            </div>
+            <div class="content">
+                <div id="card-content">
+                    <!-- Property entries will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Floating Card for Node Details -->
+        <div class="ui card" id="node-card" style="display: none; position: absolute; left: 380px; top:60px; z-index: 1000; max-width: 300px; overflow-wrap: break-word;">
+            <div class="content">
+                <div class="header" id="card-title">Node Label</div> <!-- Title dynamically updated -->
+            </div>
+            <div class="content">
+                <div id="card-content">
+                    <!-- Property entries will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Structure -->
+        <div class="ui basic modal" id="error-modal">
+            <div class="ui icon header">
+                <i class="exclamation triangle icon"></i>
+                No Results Found
+            </div>
+            <div class="content">
+                <p> No relevant results were found that satisfies the criteria. Please try OR search or Cypher query.</p>
+            </div>
+            <div class="actions">
+                <div class="ui ok button">
+                    <i class="check icon"></i>
+                    OK
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="/static/js/graph.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+
+    <script>
+        
+        // Handle search using task, dataset and model
+        function submitSearchQuery(param) {
+            const param_type = param.type;  // Access the named parameter
+            // Capture the values from each dropdown using their IDs
+            const dataset = document.getElementById('dataset-dropdown').value;  // Get selected value from the dataset dropdown
+            const task = document.getElementById('task-dropdown').value;        // Get selected value from the task dropdown
+            const model = document.getElementById('model-dropdown').value;      // Get selected value from the model dropdown
+            
+            // Debug: Log the selected values to ensure they are being captured correctly
+            console.log('Selected Values:', { dataset, task, model, param_type });
+
+            // Fetch request with the selected dropdown values
+            fetch('/search/query', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    dataset: dataset,   // Send the captured value of dataset
+                    task: task,         // Send the captured value of task
+                    model: model,       // Send the captured value of model
+                    query_type: param_type  // Send the captured value of pipeline
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                // Call renderGraph function with the received data
+                renderGraph(data.nodes, data.links); 
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+
+        // Handle CYPHER query
+        function submitSearchCypherQuery() {
+            // Capture query from text area
+            const cypher_query = document.getElementById('cypher-query').value;  // Get text in text area
+            
+            // Debug: Log the selected values to ensure they are being captured correctly
+            console.log('Cypher Query Received:', {cypher_query });
+
+            // Fetch request with the selected dropdown values
+            fetch('/search/cypher_query', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    cypher_query: cypher_query,   // Send the captured cypher_query
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                // Call renderGraph function with the received data
+                renderGraph(data.nodes, data.links);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+
+    </script>
+</body>
+</html>

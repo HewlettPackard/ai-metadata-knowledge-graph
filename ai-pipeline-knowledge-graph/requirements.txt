@@ -1,0 +1,15 @@
+jupyterlab
+neo4j
+py2neo
+graphdatascience
+python-dotenv
+sentence-transformers
+w3lib
+urllib3
+inflect
+tqdm
+pandas
+inflect
+csv
+spacy
+openpyxl

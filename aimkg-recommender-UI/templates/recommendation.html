@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommendation</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="/static/js/graph.js"></script>
+    <script src="/static/js/list.js"></script>
+    <script src="/static/js/misc_scripts.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <style>
+
+        .mini.ui.primary.button {
+            background-color: #0D5265 !important;
+            color: #ffffff;
+        }
+
+    </style>
+        
+</head>
+<body>
+    <div id='title-element' class="ui top attached segment">
+        <h3>AI Pipeline Recommender</h3> <!-- Your title goes here -->
+    </div>
+    <div id="container" class="ui grid">
+        <div id="left-panel" class="four wide column">
+            <div id="input-pane" class="ui segment">
+                <div class="ui pointing menu">
+                    <a href="/recommendation" class="active item">Recommendation</a>
+                    <a href="/search" class="item">Search</a>
+                </div>
+                <form id="query-form" class="ui form">
+                    <div class="field">
+                        <!-- <label for="dataset">Dataset</label> -->
+                        <input type="text" id="dataset" name="dataset" placeholder="Enter dataset name...">
+                    </div>
+                    <div class="field">
+                        <!-- <label for="task">Task</label> -->
+                        <input type="text" id="task" name="task" placeholder="Enter task name...">
+                    </div>
+                    <div class="field">
+                        <!-- <label for="model">Model</label> -->
+                        <input type="text" id="model" name="model" placeholder="Enter model name...">
+                    </div>
+                    <div class="field">
+                        <!-- <label for="pipeline">Pipeline</label> -->
+                        <textarea id="pipeline" name="pipeline" placeholder="Describe your pipeline in natural language..." rows="3"></textarea>
+                    </div>
+                    <!-- New field for the slider below the pipeline textarea -->
+                    <div class="field">
+                        <label for="num-items-slider">Number of Recommendations</label>
+                        <input type="range" id="num-items-slider" name="similar-items" min="1" max="10" value="3" class="ui slider">
+                            <!-- Display numbers under the slider -->
+                            <div class="slider-labels">
+                                <span>1</span>
+                                <span>2</span>
+                                <span>3</span>
+                                <span>4</span>
+                                <span>5</span>
+                                <span>6</span>
+                                <span>7</span>
+                                <span>8</span>
+                                <span>9</span>
+                                <span>10</span>
+                            </div>
+                    </div>
+
+                    <!-- New field for the slider below the pipeline textarea -->
+                    <div class="field">
+                        <label for="sim-slider">Similarity Threshold</label>
+                        <input type="range" id="sim-slider" name="similar-items" min="1" max="10" value="3" class="ui slider">
+                            <!-- Display numbers under the slider -->
+                            <div class="slider-labels">
+                                <span>0.1</span>
+                                <span>0.2</span>
+                                <span>0.3</span>
+                                <span>0.4</span>
+                                <span>0.5</span>
+                                <span>0.6</span>
+                                <span>0.7</span>
+                                <span>0.8</span>
+                                <span>0.9</span>
+                                <span>1.0</span>
+                            </div>
+                    </div>
+                    
+                    <button id='submit_btn' type="button" class="mini ui primary button" onclick="submitRecommendationQuery({view_type:'graph'})">Submit</button>
+                </form>
+                <br>
+                <div class="ui mini buttons">
+                    <button class="ui mini button active" id="toggle_graph_view_btn">Graph View</button>
+                    <div class="or"></div>
+                    <button class="ui mini button" id="toggle_list_view_btn">List View</button>
+                </div>
+                <br>
+                <!-- Button to toggle the sidebar for explanations -->
+                <button class="mini ui primary button" id="toggle-button">Show Explanations</button>
+            </div>
+        </div>
+
+        <!--Result Panel-->
+        <div id="right-panel" class="twelve wide column">
+            <div id="result-segment" class="ui segment">
+            </div>
+        </div>
+
+        <!-- Loading Dialog Box -->
+        <div id="loading-dialog" class="loading-dialog hidden">
+            <div class="loading-content">
+                <div class="ui active inline loader"></div> <!-- Loader from Semantic UI -->
+                <span>Computing results...</span>
+            </div>
+        </div>
+        
+        <!--Explanation Panel-->
+        <div id="div-explanation">
+            <!-- Sidebar container -->
+            <div id="sidebar" class="sidebar hidden">
+                <!-- Segments will be dynamically populated here -->
+            </div>
+        </div>
+
+        <!-- Floating Card for Node Details -->
+        <div class="ui card" id="node-card" style="display: none; position: absolute; left: 380px; top:60px; z-index: 1000; max-width: 300px; overflow-wrap: break-word;">
+            <div class="content">
+                <div class="header" id="card-title">Node Label</div> <!-- Title dynamically updated -->
+            </div>
+            <div class="content">
+                <div id="card-content">
+                    <!-- Property entries will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    
+
+
+    <script>
+        // Global variable to store fetched data
+        let fetchedData = null;
+
+        // Function to fetch data when the submit button is clicked
+        function submitRecommendationQuery() {
+            const form = document.getElementById('query-form');
+            const formData = new FormData(form);
+            // Show the loading dialog when the button is clicked
+            showLoadingDialog();
+
+            //send fetch req
+            fetch('/recommendation/query', {  // Use a unified endpoint for data fetching
+                method: 'POST',
+                body: JSON.stringify({
+                    dataset: formData.get('dataset'),
+                    task: formData.get('task'),
+                    model: formData.get('model'),
+                    pipeline: formData.get('pipeline'),
+                    num_recommendations: formData.get('num-items-slider')
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Data fetched successfully:', data);
+                fetchedData = data;  // Store the fetched data in the global variable
+                hideLoadingDialog();
+                renderGraph(fetchedData.nodes, fetchedData.links);
+            })
+            .catch((error) => {
+                console.error('Error fetching data:', error);
+            });
+        }
+
+        document.getElementById('toggle_graph_view_btn').addEventListener('click', function() {
+            // Set the graph view button as active
+            this.classList.add('active');
+            this.classList.remove('inactive');
+
+            // Set the list view button as inactive
+            document.getElementById('toggle_list_view_btn').classList.remove('active');
+            document.getElementById('toggle_list_view_btn').classList.add('inactive');
+
+            // Render the graph using the fetched data
+            renderGraph(fetchedData.nodes, fetchedData.links);
+        });
+
+        document.getElementById('toggle_list_view_btn').addEventListener('click', function() {
+            // Hide the floating card when switching to list view
+            document.getElementById('node-card').style.display = 'none'; 
+            // Set the list view button as active
+            this.classList.add('active');
+            this.classList.remove('inactive');
+
+            // Set the graph view button as inactive
+            document.getElementById('toggle_graph_view_btn').classList.remove('active');
+            document.getElementById('toggle_graph_view_btn').classList.add('inactive');
+
+            // Render the list using the fetched data
+            renderList(fetchedData.nodes);
+        });
+
+        // Event listener to the toggle explanation button
+        document.getElementById('toggle-button').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('visible');
+            sidebar.classList.toggle('hidden');
+            renderExplanations(fetchedData.explanations);
+        });
+
+        // Function to show the loading dialog
+        function showLoadingDialog() {
+            const loadingDialog = document.getElementById('loading-dialog');
+            loadingDialog.classList.remove('hidden');
+        }
+
+        // Function to hide the loading dialog
+        function hideLoadingDialog() {
+            const loadingDialog = document.getElementById('loading-dialog');
+            loadingDialog.classList.add('hidden');
+        }
+
+
+    </script>
+</body>
+</html>

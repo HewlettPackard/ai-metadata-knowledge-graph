@@ -1,0 +1,391 @@
+/* Import Open Sans font */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400&display=swap');
+
+/* Global Styles */
+body {
+    margin: 0;
+    font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+    background-color: #f4f7f9;
+    color: #333;
+}
+
+#container {
+    display: flex;
+    height: 100vh;
+}
+
+#title-element {
+    background-color: #01A982;
+    color: #ffffff;
+}
+
+.ui.top.attached.segment {
+    margin-bottom: 0 !important;
+    z-index: 1;
+}
+
+.ui.grid {
+    margin-top: 0 !important;
+    padding-top: 1rem;
+}
+
+
+/*------------------ALL BUTTON RELATED-----------*/
+
+.mini.ui.primary.button {
+    background-color: #01A982 !important;
+    color: #ffffff;
+}
+
+/* graphview list view buttons */
+.ui.mini.buttons .active {
+    background-color: #01A982 !important; /* Set active button color */
+    color: #ffffff !important;
+}
+
+/*
+.ui.mini.buttons .inactive {
+    background-color: #ffffff !important; 
+    color: #01A982 !important;
+    border: #01A982;
+}*/
+
+/* Toggle button for explanations */
+#toggle-button {
+    background-color: #01A982    !important; /* Set active button color */
+    color: #ffffff !important;
+}
+
+
+/*-------recommendation/search butttons*/
+.ui.pointing.menu {
+    flex: 0 1 auto; /* Adjust height to be automatic */
+    width: 100%; /* Expand to full width of the segment */
+    margin-top: 0; /* Remove extra margin between menu and segment */
+    border-radius: 0; /* Remove border-radius to blend with the segment */
+}
+
+.ui.pointing.menu .item {
+    flex: 1; /* Make each item take up equal space */
+    display: flex; /* Set item as flex container */
+    align-items: center; /* Vertically center the content */
+    justify-content: center; /* Horizontally center the text */
+}
+
+/* Active menu item styles */
+.ui.pointing.menu .item.active {
+    color: #f1faee; /* Text color for active items */
+    background-color: #01A982; /* Background color for active items */
+}
+
+/* Active menu item styles */
+.ui.pointing.menu .item.inactive {
+    color: #01A982; /* Text color for active items */
+    background-color: #ffffff; /* Background color for active items */
+    border: #01A982;
+}
+
+
+
+/*------------------END:ALL BUTTON RELATED-----------*/
+
+
+/* Card Design */
+.card {
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 0;  /* Remove rounded corners */
+    padding: 20px;
+    margin: 10px;
+}
+
+#input-pane {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: 100%;
+}
+
+
+
+
+/* Left Panel Styles */
+#left-panel {
+    width: 25%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    padding-top: 0px;
+    border-right: 1px solid #ccc;
+}
+
+
+#right-panel {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px; /* Remove padding to allow elements to fill space */
+    padding-top: 0px;
+    border-right: 1px solid #ccc;
+    position: relative;
+}
+
+/* ------ result-segment is under right-panel container-----*/
+#result-segment {
+    flex: 1; /* Allow the graph tab to grow and fill available space */
+    display: flex; /* Set as a flex container to manage child elements */
+    padding: 5px; /* Ensure no padding is limiting the height */
+    height:100%;
+    width:100%;
+    position: relative;
+}
+
+
+#node-properties {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    padding: 10px;
+    background-color: #f4f7f9;
+    border-radius: 0;  /* Remove rounded corners */
+}
+
+
+#node-card {
+    max-width: 300px; /* Adjust the card width */
+    overflow-wrap: break-word; /* Prevent text overflow */
+    word-wrap: break-word;
+    display: none;
+    position: absolute;
+    left: 60px; /* Align the card to the left of #result-segment */
+    top: 20px; /* Adjust the vertical positioning */
+    z-index: 1000;
+}
+
+#card-content {
+    max-height: 200px; /* Limit the height of the card */
+    overflow-y: auto; /* Add scroll if content exceeds the card height */
+    white-space: pre-wrap; /* Preserve whitespace and line breaks */
+    padding: 5px; /* Padding around content */
+}
+
+#node-card .header {
+    font-size: 16px; /* Adjust font size for the header specifically */
+    padding-top: 7px; /* Add padding at the top */
+    padding-left: 7px; /* Add padding on the left */
+}
+
+#node-card .content {
+    font-size: 12px; /* Adjust font size for content */
+    line-height: 2; /* Adjust line spacing for readability */
+}
+
+/* ------------------- .custom-card defined in list.js */
+.custom-card {
+    position: relative;  /* Allows for positioning of child elements if needed */
+    max-width: 250px;  /* Maintain consistent width similar to node card */
+    overflow-wrap: break-word;  /* Handle long text within the card */
+    box-sizing: border-box;  /* Include padding and border in the element's total width */
+    border: 1px solid #ddd;  /* Optional border matching node card styling */
+    border-radius: 0px;  /* Rounded corners, adjust as needed */
+    padding: 5px;  /* Uniform padding inside the card */
+    display: flex;  /* Use flex layout to evenly distribute header and content */
+    flex-direction: column;  /* Stack header and content vertically */
+    height: 300px;  /* Set a consistent height for each card */
+}
+
+/* Styles for the header within the card */
+.custom-card .header {
+    font-size: 12px;  /* Font size for headers inside cards */
+    font-weight: bold;  /* Bold text for headers to stand out */
+    padding: 5px 0;  /* Add some padding above and below the header text */
+    flex: 0 0 auto;  /* Allow header to take only the space it needs */
+}
+
+/* Styles for content within the card */
+.custom-card .content {
+    padding: 10px;  /* Padding around the content for spacing */
+    font-size: 10px;  /* Default font size for content, can be adjusted */
+    overflow-y: auto;  /* Enable scroll if content overflows vertically */
+    flex: 1 1 auto;  /* Allow the content to take the remaining space */
+}
+#result-segment .custom-card .content {
+    font-size: 10px !important;  /* Use !important to force the font size */
+}
+
+#result-segment .custom-card .header {
+    font-size: 12px !important;  /* Force header font size */
+}
+
+
+
+/*-------------------------- EXPLANATION BAR-------------------*/
+/* Style for the sidebar */
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 250px;   
+    height: 100vh;
+    background-color: #ffffff;
+    border-left: 1px solid #ccc;
+    overflow-y: auto;
+    padding: 10px;
+    transition: transform 0.3s ease;
+    transform: translateX(100%);
+    z-index: 1000; /* Set a high z-index to overlay the title and container */
+
+}
+
+/* Visible state of the sidebar */
+.sidebar.visible {
+    transform: translateX(0);
+}
+
+/* Hidden state of the sidebar */
+.sidebar.hidden {
+    transform: translateX(100%);
+}
+
+
+/* Common style for all explanation segments */
+.explanation-segment {
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #01A982;
+    border-radius: 0px;
+    font-size:10px;
+}
+
+
+/* Segment title with a stronger hue */
+.segment-title {
+    background-color: #01A982; /* Stronger hue for regular segments */
+    padding: 5px;
+    font-weight: bold;
+    /* border-bottom: 1px solid #fff; */
+    font-size:10px;
+    color: #ffffff
+}
+
+/* Segment content with a lighter hue */
+.segment-content {
+    background-color: #ffffff; /* Lighter hue for regular segments */
+    padding: 5px;
+    margin-top: 3px;
+    /* border-top: 1px solid #fff; */
+    border: #01A982;
+    font-size:10px;
+}
+
+
+
+.explanation-first-segment  {
+    border: 1px solid #0D5265;
+}
+/* Special title color for the first segment */
+.explanation-first-segment .segment-title {
+    background-color: #0D5265; /* Different color for the title of the first segment */
+    color: #ffffff;
+}
+
+/* Special content color for the first segment */
+.explanation-first-segment .segment-content {
+    background-color: #ffffff; /* Different color for the content of the first segment */
+    border: #0D5265;
+}
+
+
+/*--------------------loading element-----------------*/
+
+/* Style for the loading dialog box */
+.loading-dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000; /* Ensure it appears on top */
+}
+
+/* Hidden state of the dialog */
+.loading-dialog.hidden {
+    display: none; /* Hide when not active */
+}
+
+/* Style for the loading content */
+.loading-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+/*--------------------END: loading element-----------------*/
+
+
+/*---------------------SLIDER---------------------*/
+
+/* Style the track and thumb of the slider with the specified ID */
+#num-items-slider {
+    -webkit-appearance: none; /* Removes default slider appearance in WebKit browsers */
+    width: 100%; /* Full width */
+    height: 8px; /* Track height */
+    background: #ddd; /* Track background color */
+    outline: none; /* Remove outline */
+    border-radius: 5px; /* Rounded track edges */
+    transition: background 0.3s ease-in-out; /* Smooth background transition */
+}
+
+/* Thumb (the draggable part) */
+#num-items-slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Removes default thumb appearance */
+    width: 15px; /* Thumb width */
+    height: 15px; /* Thumb height */
+    background: #01A982; /* Thumb color */
+    border-radius: 50%; /* Rounded thumb */
+    cursor: pointer; /* Cursor changes to pointer when hovering */
+    transition: background 0.3s ease-in-out; /* Smooth thumb color transition */
+}
+
+/* Style for the slider labels to align them with the slider */
+.slider-labels {
+    display: flex;
+    justify-content: space-between; /* Spread the numbers evenly */
+    margin-top: 5px;
+    font-size: 12px;
+    color: #555; /* Customize as needed */
+}
+
+/* Style for the range input */
+input[type="range"] {
+    width: 100%;
+    margin: 0;
+}
+
+/* Style the track and thumb of the slider with the specified ID */
+#sim-slider {
+    -webkit-appearance: none; /* Removes default slider appearance in WebKit browsers */
+    width: 100%; /* Full width */
+    height: 8px; /* Track height */
+    background: #ddd; /* Track background color */
+    outline: none; /* Remove outline */
+    border-radius: 5px; /* Rounded track edges */
+    transition: background 0.3s ease-in-out; /* Smooth background transition */
+}
+
+/* Thumb (the draggable part) */
+#sim-slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Removes default thumb appearance */
+    width: 15px; /* Thumb width */
+    height: 15px; /* Thumb height */
+    background: #01A982; /* Thumb color */
+    border-radius: 50%; /* Rounded thumb */
+    cursor: pointer; /* Cursor changes to pointer when hovering */
+    transition: background 0.3s ease-in-out; /* Smooth thumb color transition */
+}

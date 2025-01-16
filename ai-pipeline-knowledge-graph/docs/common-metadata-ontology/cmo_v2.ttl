@@ -1,0 +1,437 @@
+@prefix : <http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology> .
+
+<http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#contains
+:contains rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf owl:topObjectProperty ;
+          rdfs:domain :Pipeline ;
+          rdfs:range :Stages .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#executes
+:executes rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf owl:topObjectProperty ;
+          rdfs:domain :Pipeline ;
+          rdfs:range :Task .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#generates
+:generates rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf owl:topObjectProperty ;
+           rdfs:domain :Execution ;
+           rdfs:range :Metrics .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#has
+:has rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf owl:topObjectProperty ;
+     rdfs:domain :Pipeline ;
+     rdfs:range :Framework ,
+                :Report .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#isInput
+:isInput rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf owl:topObjectProperty ;
+         rdfs:domain :Artifacts ;
+         rdfs:range :Execution .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#isOutput
+:isOutput rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf owl:topObjectProperty ;
+          rdfs:domain :Execution ;
+          rdfs:range :Artifacts .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#run
+:run rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf owl:topObjectProperty ;
+     rdfs:domain :Stages ;
+     rdfs:range :Execution .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#subCatof
+:subCatof rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf owl:topObjectProperty ;
+          rdfs:domain :Dataset ,
+                      :Metrics ,
+                      :Model ;
+          rdfs:range :Artifacts .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#uses
+:uses rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf owl:topObjectProperty ;
+      rdfs:domain :Hyperparameters ;
+      rdfs:range :Model .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#abstract
+:abstract rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf owl:topDataProperty ;
+          rdfs:domain :Report ;
+          rdfs:comment "In some cases, the report can be a published paper which has an abstract. This property captures the abstract if available." .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#artifact_id
+:artifact_id rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf owl:topDataProperty ;
+             rdfs:domain :Artifacts ,
+                         :Dataset ,
+                         :Model ;
+             rdfs:comment "Unique ID generated for the artifacts produced as a result of execution" .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#artifact_name
+:artifact_name rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf owl:topDataProperty ;
+               rdfs:domain :Artifacts ,
+                           :Dataset ,
+                           :Model ;
+               rdfs:comment "Name of the artifact component - usually combination of pipeline name and execution name" .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#category
+:category rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf owl:topDataProperty ;
+          rdfs:domain :Task ;
+          rdfs:comment "The nature of the machine/deep learning task being performed such as detection, localization or summarization" .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#code_repo_url
+:code_repo_url rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf owl:topDataProperty ;
+               rdfs:domain :Framework ;
+               rdfs:comment "The URL to the code repository used to implement the pipeline" .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#command
+:command rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf owl:topDataProperty ;
+         rdfs:domain :Execution ;
+         rdfs:comment "Command Line Interface(CLI) command used to run the execution" .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#custom_properties
+:custom_properties rdf:type owl:DatatypeProperty ;
+                   rdfs:subPropertyOf owl:topDataProperty ;
+                   rdfs:domain :Artifacts ,
+                               :Dataset ,
+                               :Execution ,
+                               :Framework ,
+                               :Hyperparameters ,
+                               :Metrics ,
+                               :Model ,
+                               :Pipeline ,
+                               :Report ,
+                               :Stages ,
+                               :Task ;
+                   rdfs:comment "Custom Key-Value pairs that the user can add to capture more information about the compoenets of the pipeline" .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#dataset_id
+:dataset_id rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf owl:topDataProperty ;
+            rdfs:domain :Dataset ;
+            rdfs:comment "Unique ID for the dataset being used in the pipeline" .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#dataset_name
+:dataset_name rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf owl:topDataProperty ;
+              rdfs:domain :Dataset ;
+              rdfs:comment "Name of the dataset used for each execution of the pipeline" .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#dataset_url
+:dataset_url rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf owl:topDataProperty ;
+             rdfs:domain :Dataset ;
+             rdfs:comment "The public and official URL of the dataset from where the original data can be found along with documentation." .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#description
+:description rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf owl:topDataProperty ;
+             rdfs:domain :Dataset ,
+                         :Model ,
+                         :Task ;
+             rdfs:comment "Description of the components of the pipeline that provides additional information about the nodes" .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#execution_id
+:execution_id rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf owl:topDataProperty ;
+              rdfs:domain :Artifacts ,
+                          :Execution ;
+              rdfs:comment "ID of the execution component" .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#execution_name
+:execution_name rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf owl:topDataProperty ;
+                rdfs:domain :Execution ;
+                rdfs:comment "Name of the various executions performed for each stage" .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#framework_id
+:framework_id rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf owl:topDataProperty ;
+              rdfs:domain :Framework ;
+              rdfs:comment "Unique ID for the framework being used" .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#framework_name
+:framework_name rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf owl:topDataProperty ;
+                rdfs:domain :Framework ;
+                rdfs:comment "Name of the framework being used to implement the pipeline" .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#metric_id
+:metric_id rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf owl:topDataProperty ;
+           rdfs:domain :Metrics ;
+           rdfs:comment "Unique ID for the metrics generated as a result of execution" .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#modality
+:modality rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf owl:topDataProperty ;
+          rdfs:domain :Dataset ,
+                      :Task ;
+          rdfs:comment "The modality of the task and dataset such as image, text, audio or multimodal." .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#model_class
+:model_class rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf owl:topDataProperty ;
+             rdfs:domain :Model ;
+             rdfs:comment "The class of the models used in the pipeline such as CNN, GRU or Transformers" .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#model_id
+:model_id rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf owl:topDataProperty ;
+          rdfs:comment "Unique ID for the models used in the pipeline" .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#param_id
+:param_id rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf owl:topDataProperty ;
+          rdfs:domain :Hyperparameters ;
+          rdfs:comment "Unique ID generated for the parameter settings used for each execution of the pipeline" .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#parameter_setting
+:parameter_setting rdf:type owl:DatatypeProperty ;
+                   rdfs:subPropertyOf owl:topDataProperty ;
+                   rdfs:domain :Hyperparameters ;
+                   rdfs:comment "A dict of parameter settings used for the models" .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#pdf_url
+:pdf_url rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf owl:topDataProperty ;
+         rdfs:domain :Report ;
+         rdfs:comment "PDF URL of the reports or published papers related to the pipeline" .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#pipeline_id
+:pipeline_id rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf owl:topDataProperty ;
+             rdfs:comment "Unique ID generated for the pipelines" .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#pipeline_name
+:pipeline_name rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf owl:topDataProperty ;
+               rdfs:domain :Artifacts ,
+                           :Execution ,
+                           :Pipeline ,
+                           :Stages ;
+               rdfs:comment "Name of the AI pipeline being executed" .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#report_id
+:report_id rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf owl:topDataProperty ;
+           rdfs:comment "Unique ID generated for the report associated with the pipeline" .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#report_title
+:report_title rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf owl:topDataProperty ;
+              rdfs:domain :Report ;
+              rdfs:comment "Title of the report associated with the pipeline" .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#source
+:source rdf:type owl:DatatypeProperty ;
+        rdfs:subPropertyOf owl:topDataProperty ;
+        rdfs:domain :Artifacts ,
+                    :Dataset ,
+                    :Execution ,
+                    :Framework ,
+                    :Hyperparameters ,
+                    :Metrics ,
+                    :Model ,
+                    :Pipeline ,
+                    :Report ,
+                    :Stages ,
+                    :Task ;
+        rdfs:comment "The data source from where each of the nodes representing pipeline metadata are obtained." .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#source_id
+:source_id rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf owl:topDataProperty ;
+           rdfs:domain :Dataset ,
+                       :Metrics ,
+                       :Model ,
+                       :Pipeline ,
+                       :Report ,
+                       :Task ;
+           rdfs:comment "The original ID that was given to the concept from their respective data sources." .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#stage_id
+:stage_id rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf owl:topDataProperty ;
+          rdfs:domain :Execution ,
+                      :Stages ;
+          rdfs:comment "Unique ID for the stage component using UUID" .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#stage_name
+:stage_name rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf owl:topDataProperty ;
+            rdfs:domain :Execution ,
+                        :Stages ;
+            rdfs:comment "Name of the AI pipeline stage that is being executed" .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#task_id
+:task_id rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf owl:topDataProperty ;
+         rdfs:domain :Task ;
+         rdfs:comment "Unique ID for the machine/deep learning task being performed by the pipeline" .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#task_name
+:task_name rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf owl:topDataProperty ;
+           rdfs:domain :Task ;
+           rdfs:comment "Name of the machine/deep learning task being executed" .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#task_type
+:task_type rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf owl:topDataProperty ;
+           rdfs:domain :Task ;
+           rdfs:comment "The type of machine learning task such as supervised learning, unsupervised learning or few-shot learning" .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#version
+:version rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf owl:topDataProperty ;
+         rdfs:domain :Framework ;
+         rdfs:comment "Version of the framework being used" .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#Artifacts
+:Artifacts rdf:type owl:Class ;
+           rdfs:comment "A list of artifacts that are produced as an output of execution or given as an input for an execution" .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#Dataset
+:Dataset rdf:type owl:Class ;
+         rdfs:comment "The dataset used for to execute a given task of a pipeline." .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#Execution
+:Execution rdf:type owl:Class ;
+           rdfs:comment "Various executions produced for a given stage. The stages could be feature engineering, training, evaluation and so on. Various executions can be produced for a given stage by executing the stage with different parameters" .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#Framework
+:Framework rdf:type owl:Class ;
+           rdfs:comment "Specifications of the framework with which the pipeline was implemented." .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#Hyperparameters
+:Hyperparameters rdf:type owl:Class ;
+                 rdfs:comment "The hyperparameters used for Model training" .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#Metrics
+:Metrics rdf:type owl:Class ;
+         rdfs:comment "Metrics is a subClassOf artifacts. Metrics are produced as an output of each execution" .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#Model
+:Model rdf:type owl:Class ;
+       rdfs:comment "Models used to train the pipeline. Also, the models produced as an output of an execution of a pipeline" .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#Pipeline
+:Pipeline rdf:type owl:Class ;
+          rdfs:comment "The AI pipeline that is being executed using the dataset, model and hyperparameters for a given task" .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#Report
+:Report rdf:type owl:Class ;
+        rdfs:comment "A report can be any documentation related to the pipeline. It can be published papers or readme" .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#Stages
+:Stages rdf:type owl:Class ;
+        rdfs:comment "The various stages of an AI pipeline such as data preprocessing, feature engineering, training, testing and so on." .
+
+
+###  http://www.semanticweb.org/venkatre/ontologies/2023/5/common_metadata_ontology#Task
+:Task rdf:type owl:Class ;
+      rdfs:comment "The task for which the pipeline is being executed. For example, 3d object detection, 3d object segmentation and so on" .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Artifacts
+                :Dataset
+                :Execution
+                :Framework
+                :Hyperparameters
+                :Metrics
+                :Model
+                :Pipeline
+                :Report
+                :Stages
+                :Task
+              )
+] .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
