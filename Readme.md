@@ -1,6 +1,20 @@
 ## AI Pipeline Metadata Knowledge Graph
+<p align="justify">
 The emergence of advanced Artificial Intelligence (AI) models has driven the development of frameworks and approaches that focus on automating model training and hyperparameter tuning of end-to-end AI pipelines. However, other crucial stages of these pipelines such as dataset selection, feature engineering, and model optimization for deployment have received less attention. Improving efficiency of end-to-end AI pipelines requires metadata of past executions of AI pipelines and all their stages. Regenerating metadata history by re-executing existing AI pipelines is computationally challenging and impractical. To address this issue, we propose to source AI pipeline metadata from open-source platforms like Papers-with-Code, OpenML, and Hugging Face. However, integrating and unifying the varying terminologies and data formats from these diverse sources is a challenge. In this paper, we present a solution by introducing Common Metadata Ontology (CMO) which is used to construct an extensive AI Pipeline Metadata Knowledge Graph (AIMKG) consisting of 1.6 million pipelines. Through semantic enhancements, the pipeline metadata in AIMKG is also enriched for downstream tasks such as search and recommendation of AI pipelines. We perform quantitative and qualitative evaluations on AIMKG to search and recommend relevant pipelines to user query. For quantitative evaluation we propose a custom aggregation model that outperforms other baselines by achieving a retrieval accuracy (R@1) of 76.3%. Our qualitative analysis shows that  AIMKG-based recommender retrieved relevant pipelines in 78% of test cases compared to the state-of-the-art MLSchema based recommender which retrieved relevant responses in 51% of the cases. AIMKG serves as an atlas for navigating the evolving AI landscape, providing practitioners with a comprehensive factsheet for their applications. It guides AI pipeline optimization, offers insights and recommendations for improving AI pipelines, and serves as a foundation for data mining and analysis of evolving AI workflows.
+ </p>
+ 
+<br>
 
+<div style="text-align: center; margin-bottom: 20px;">
+  <figure style='display: table'>
+  <img src='figures/UI.png'>
+  <p>
+    Figure 1:Dashboard of AI pipeline Recommender that uses Dynamic AI Pipeline Constructor to recommend relevant pipelines
+  </p>
+</figure>
+</div>
+
+<br>
 
 
 ### AIMKG Set up Guide
@@ -87,18 +101,6 @@ The full paper along with supplementary materials can be found here[Constructing
 
 ### Video
 The demo video of AI pipeline Recommendation can be found here - [Demo of AI pipeline Recommender](https://drive.google.com/drive/folders/1KEZJuyDLj3i9qWgXEigrhvuJ73a1OXak?usp=sharing)
-
-<br>
-<br>
-
-<div style="text-align: center; margin-bottom: 20px;">
-  <figure style='display: table'>
-  <img src='figures/UI.png'>
-  <p>
-    Figure 1:Dashboard of AI pipeline Recommender that uses Dynamic AI Pipeline Constructor to recommend relevant pipelines
-  </p>
-</figure>
-</div>
 
 <br>
 
