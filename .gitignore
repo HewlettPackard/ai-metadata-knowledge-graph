@@ -4,9 +4,9 @@ ai-pipeline-knowledge-graph/ai-mkg-ids
 ai-pipeline-knowledge-graph/Neo4j-IDS-Eval
 ai-pipeline-knowledge-graph/.env
 
-aimkg_UI/__pycache__
-aimkg_UI/utils/*.h5
-aimkg_UI/.env
+aimkg-recommender-UI/__pycache__
+aimkg-recommender-UI/utils/*.h5
+aimkg-recommender-UI/.env
 
 # Temp files
 papers-with-code/__pycache__
