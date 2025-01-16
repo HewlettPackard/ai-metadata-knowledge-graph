@@ -137,29 +137,32 @@ The exploratory data analysis of collected data showed different data structures
 
 <br>
 
-<div style="display: flex; flex-wrap: wrap;">
-  <div style="flex: 40%; padding: 5px; text-align: center;">
-      <p style="margin-bottom: 5px; text-align: center; font-style: italic; font-weight: bold;">Graph Data Model: Papers-with-code</p> <br>
-    <img src="figures/gdm_pwc.svg" alt="Image 1" style="width:40%;">
-      
+<div style="display: flex; flex-wrap: wrap; justify-content: center;">
+  <!-- Top-left quadrant -->
+  <div style="flex: 1 0 45%; max-width: 45%; padding: 10px; text-align: center;">
+    <p style="margin-bottom: 5px; text-align: center; font-style: italic; font-weight: bold;">Graph Data Model: Papers-with-code</p>
+    <img src="figures/gdm_pwc.svg" alt="Image 1" style="width:80%;">
   </div>
-  <div style="flex: 40%; padding: 5px; text-align: center;">
-      <p style="margin-bottom: 5px; text-align: center; font-style: italic; font-weight: bold;">Graph Data Model: OpenML</p> <br>
-    <img src="figures/gdm_openml.svg" alt="Image 2" style="width:40%;">
-      
+
+  <!-- Top-right quadrant -->
+  <div style="flex: 1 0 45%; max-width: 45%; padding: 10px; text-align: center;">
+    <p style="margin-bottom: 5px; text-align: center; font-style: italic; font-weight: bold;">Graph Data Model: OpenML</p>
+    <img src="figures/gdm_openml.svg" alt="Image 2" style="width:80%;">
+  </div>
+
+  <!-- Bottom-left quadrant -->
+  <div style="flex: 1 0 45%; max-width: 45%; padding: 10px; text-align: center;">
+    <p style="margin-bottom: 5px; text-align: center; font-style: italic; font-weight: bold;">Graph Data Model: Common Metadata Framework</p>
+    <img src="figures/gdm_cmf.svg" alt="Image 3" style="width:80%;">
+  </div>
+
+  <!-- Bottom-right quadrant -->
+  <div style="flex: 1 0 45%; max-width: 45%; padding: 10px; text-align: center;">
+    <p style="margin-bottom: 5px; text-align: center; font-style: italic; font-weight: bold;">Graph Data Model: Huggingface</p>
+    <img src="figures/gdm_hf.svg" alt="Image 4" style="width:80%;">
   </div>
 </div>
-<br>
-<div style="display: flex; flex-wrap: wrap;">
-  <div style="flex: 40%; padding: 5px;">
-      <p style="margin-bottom: 5px; text-align: center; font-style: italic; font-weight: bold;">Graph Data Model: Common Metadata Framework</p> <br>
-    <img src="figures/gdm_cmf.svg" alt="Image 3" style="width:40%;">
-  </div>
-  <div style="flex: 40%; padding: 5px;">
-      <p style="margin-bottom: 5px; text-align: center; font-style: italic; font-weight: bold;">Graph Data Model: Huggingface</p> <br>
-    <img src="figures/gdm_hf.svg" alt="Image 4" style="width:40%;">
-  </div>
-</div></table>
+
 
 
 #### 3. Common Metadata Ontology
