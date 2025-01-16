@@ -114,11 +114,13 @@ The construction of AIMKG is described in the figure below. The construction inv
 * Semantic Enrichments
 * Data Ingestion to Graph Database(Neo4j)
 
-<div style="flex: 80%; padding: 5px; text-align: center;">
-    <p style="margin-bottom: 5px; text-align: center; font-style: italic; font-weight: bold;">Construction of AI pipeline Metadata Knowledge Graph</p>
-    <br>
-    <img src="figures/annotated_arch.png" alt="kg-const" style="width:80%;">
+<br>
+
+<div align="center">
+    <p><strong><em>Construction of AI pipeline Metadata Knowledge Graph</em></strong></p>
+    <img src="figures/annotated_arch.png" alt="kg-const" width="80%">
 </div>
+
 
 
 #### 1. Data Collection
@@ -136,7 +138,7 @@ The exploratory data analysis of collected data showed different data structures
 </p>
 
 <br>
-<table>
+<table align="center">
   <tr>
     <td align="center">
       <p><i>Graph Data Model: Papers-with-code</i></strong></p>
@@ -174,12 +176,12 @@ The overview of CMO can be found below and the details can be found at
 <a href="common-metadata-ontology/readme.md">common-metadata-ontology</a> folder.
 </p>
 
+<br>
+<div align="center">
+    <p><strong><em>Overview of Common Metadata Ontology</em></strong></p>
+    <img src="figures/cmo_properties.png" alt="CMO" width="90%">
+</div>
 
-<div style="flex: 90%; padding: 5px; text-align: center;">
-    <p style="margin-bottom: 5px; text-align: center; font-style: italic; font-weight: bold;">Overview of Common Metadata Ontology</p>
-    <br>
-    <img src="figures/cmo_properties.png" alt="CMO" style="width:90%;">
-</div>>
 
 
 #### 4. Mapping
@@ -190,12 +192,12 @@ The concepts from Papers-with-code, OpenML and Huggingface are mapped to CMO to 
 In order to enable contextually relevant queries, semantic enrichments are performed on the data entities. For example, in the figure below, the user searched for "Image Detection" task and its pipeline. It can be noticed that both "2D Object Detection" and "3D object Detection" are returned as results which do not explicitly have the name "image" in them. Such semantic enhancements are done for tasks, datasets and models. The methods and techniques are detailed [here](semantic-enrichments/semantics_readme.md) 
 </p>
 
-<div style="flex: 90%; padding: 5px; text-align: center;">
-    <p style="margin-bottom: 5px; text-align: center; font-style: italic; font-weight: bold;">
-    </p>
-    <br>
-    <img src="figures/sample_query.png" alt="CMO" style="width:90%;">
-</div>>
+<div align="center">
+    <p><strong><em> </em></strong></p>
+    <img src="figures/sample_query.png" alt="CMO" width="90%">
+</div>
+
+<br>
 
 #### 6. Data Ingestion
 The data gathered and semantically enriched are then loaded to Neo4j Graph DB to perform serach and recommendation. The steps to set-up the graph DB are mentioned in the section [Set Up Guide](#aimkg-set-up-guide)
