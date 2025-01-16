@@ -139,21 +139,21 @@ The exploratory data analysis of collected data showed different data structures
 <table>
   <tr>
     <td align="center">
-      <p><strong><i>Graph Data Model: Papers-with-code</i></strong></p>
+      <p><i>Graph Data Model: Papers-with-code</i></strong></p>
       <img src="figures/gdm_pwc.svg" alt="Image 1" width="200">
     </td>
     <td align="center">
-      <p><strong><i>Graph Data Model: OpenML</i></strong></p>
+      <p><i>Graph Data Model: OpenML</i></strong></p>
       <img src="figures/gdm_openml.svg" alt="Image 2" width="200">
     </td>
   </tr>
   <tr>
     <td align="center">
-      <p><strong><i>Graph Data Model: Common Metadata Framework</i></strong></p>
+      <p><i>Graph Data Model: Common Metadata Framework</i></strong></p>
       <img src="figures/gdm_cmf.svg" alt="Image 3" width="200">
     </td>
     <td align="center">
-      <p><strong><i>Graph Data Model: Huggingface</i></strong></p>
+      <p><i>Graph Data Model: Huggingface</i></strong></p>
       <img src="figures/gdm_hf.svg" alt="Image 4" width="200">
     </td>
   </tr>
@@ -164,8 +164,16 @@ The exploratory data analysis of collected data showed different data structures
 
 #### 3. Common Metadata Ontology
 <p align="justify">
-The data collected from above mentioned sources consists of [different nomenclature and data structures](ai-pipeline-datasources/readme.md). In order to unify them, Common Metadata Ontology (CMO) was designed based on the principles of [Common Metadata Framework (CMF)](https://github.com/HewlettPackard/cmf) which follows a pipeline-centric framework. MLFlow, which follows a model-centric approach will require separate instantiation of each model even if they are being executed for the same pipeline, say, Entity Extraction from Semi-Structed documents. CMF encompasses all the models and datasets of a pipeline under single instantiation enabling search of best execution path. The overview of CMO can be found below and the details can be found at [common-metadata-ontology](common-metadata-ontology/readme.md) folder
+The data collected from above mentioned sources consists of 
+<a href="ai-pipeline-datasources/readme.md">different nomenclature and data structures</a>. 
+In order to unify them, Common Metadata Ontology (CMO) was designed based on the principles of 
+<a href="https://github.com/HewlettPackard/cmf">Common Metadata Framework (CMF)</a> which follows a pipeline-centric framework. 
+MLFlow, which follows a model-centric approach will require separate instantiation of each model even if they are being executed for the same pipeline, say, Entity Extraction from Semi-Structed documents. 
+CMF encompasses all the models and datasets of a pipeline under single instantiation enabling search of best execution path. 
+The overview of CMO can be found below and the details can be found at 
+<a href="common-metadata-ontology/readme.md">common-metadata-ontology</a> folder.
 </p>
+
 
 <div style="flex: 90%; padding: 5px; text-align: center;">
     <p style="margin-bottom: 5px; text-align: center; font-style: italic; font-weight: bold;">Overview of Common Metadata Ontology</p>
@@ -194,5 +202,5 @@ The data gathered and semantically enriched are then loaded to Neo4j Graph DB to
 
 
 ## Publications
-* <p align="justify"> Venkataramanan, Revathy, Aalap Tripathy, Tarun Kumar, Sergey Serebryakov, Annmary Justine, Arpit Shah, Suparna Bhattacharya et al. "Constructing a Metadata Knowledge Graph as an atlas for demystifying AI Pipeline optimization." Frontiers in Big Data 7: 1476506. [Link to the paper](https://www.frontiersin.org/journals/big-data/articles/10.3389/fdata.2024.1476506/full) </p>
-* <p align="justify"> Venkataramanan, Revathy, Aalap Tripathy, Martin Foltin, Hong Yung Yip, Annmary Justine, and Amit Sheth. "Knowledge graph empowered machine learning pipelines for improved efficiency, reusability, and explainability." IEEE Internet Computing 27, no. 1 (2023): 81-88. [Link to the paper](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=10044293&casa_token=gZ8lwivSW1oAAAAA:5390SDEkYDpck4EduA3iUG6fO5Vdbi3WRcyTpJTv0yz_lliAb8xurwH3z2SvlOzqTT932dKPvfk&tag=1) </p>
+* <p align="justify"> Venkataramanan, Revathy, Aalap Tripathy, Tarun Kumar, Sergey Serebryakov, Annmary Justine, Arpit Shah, Suparna Bhattacharya et al. "Constructing a Metadata Knowledge Graph as an atlas for demystifying AI Pipeline optimization." Frontiers in Big Data 7: 1476506. <a href="https://www.frontiersin.org/journals/big-data/articles/10.3389/fdata.2024.1476506/full">Link to the paper</a> </p>
+* <p align="justify"> Venkataramanan, Revathy, Aalap Tripathy, Martin Foltin, Hong Yung Yip, Annmary Justine, and Amit Sheth. "Knowledge graph empowered machine learning pipelines for improved efficiency, reusability, and explainability." IEEE Internet Computing 27, no. 1 (2023): 81-88. <a href ="https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=10044293&casa_token=gZ8lwivSW1oAAAAA:5390SDEkYDpck4EduA3iUG6fO5Vdbi3WRcyTpJTv0yz_lliAb8xurwH3z2SvlOzqTT932dKPvfk&tag=1"> Link to the paper </a> </p>
