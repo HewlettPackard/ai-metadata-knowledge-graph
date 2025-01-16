@@ -93,9 +93,9 @@ RETURN d, a, m, e, s, p, t, r1, r2, r3,r4, r5, r6 limit 100
 
 ### AI Pipeline Recommendation Set Up Guide
 Once the neo4j is up and running with AIMKG, the following steps will open-up a UI to query the graph using natural language or find pipelines based on similar datasets, similar models or similar tasks
-* Navigate to AIMKG_UI folder
+* Navigate to `aimkg-recommender-UI` folder
 * Navigate to utils folder and run `compute_embeddings.py`. This is a one-time step done once.
-* Navigate back to the AIMKG_UI folder and run `python app.py` and the UI will stand up at the address mentioned in your terminal. The sample of the UI is shown in Figure 1 and the demo can be found [here](https://drive.google.com/drive/folders/1KEZJuyDLj3i9qWgXEigrhvuJ73a1OXak?usp=sharing)
+* Navigate back to the `aimkg-recommender-UI` folder and run `python app.py` and the UI will stand up at the address mentioned in your terminal. The sample of the UI is shown in Figure 1 and the demo can be found [here](https://drive.google.com/drive/folders/1KEZJuyDLj3i9qWgXEigrhvuJ73a1OXak?usp=sharing)
 
 
 ### AIMKG Construction

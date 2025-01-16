@@ -1,18 +1,12 @@
-############# DATA SOURCES
+ai-pipeline-knowledge-graph/notebooks/tutorial
+ai-pipeline-knowledge-graph/kg-evaluation
+ai-pipeline-knowledge-graph/ai-mkg-ids
+ai-pipeline-knowledge-graph/Neo4j-IDS-Eval
+ai-pipeline-knowledge-graph/.env
 
-ai-pipeline-datasources
-ai-pipeline-knowledge-graph
-aimkg_UI
-
-# Virtual Environments
-ai-pipeline-datasources/papers-with-code/myenv
-ai-pipeline-datasources/open-ml/myenv
-ai-pipeline-datasources/kaggle-api/myenv
-ai-pipeline-datasources/ChatGPT/myenv
-ai-pipeline-datasources/data-extraction-pwc/myenv
-
-# .env files
-ai-pipeline-datasources/ChatGPT/.env
+aimkg_UI/__pycache__
+aimkg_UI/utils/*.h5
+aimkg_UI/.env
 
 # Temp files
 papers-with-code/__pycache__
@@ -29,6 +23,6 @@ papers-with-code/myenv
 huggingface/myenv
 
 
-
+GraphLearning
 
 
