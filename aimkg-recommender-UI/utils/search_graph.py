@@ -1,3 +1,20 @@
+###
+# Copyright (2024) Hewlett Packard Enterprise Development LP
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# You may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+###
+
+
 from .neo4j_connection import Neo4jConnection
 from dotenv import load_dotenv
 import os
@@ -117,42 +134,6 @@ def get_OR_query_results(task=None, dataset=None, model=None):
 
     return results
 
-# NOTE: THIS QUERY ALWAYS RETURNS THE SAME RESULT
-# def build_AND_query(task=None, dataset=None, model=None):
-#     # Initialize the base query
-#     base_query = """
-#             OPTIONAL MATCH (task)-[r1]-(pipeline:Pipeline)
-#             OPTIONAL MATCH (pipeline)-[r2]-(stage:Stage)
-#             OPTIONAL MATCH (stage)-[r3]-(execution:Execution)
-#             OPTIONAL MATCH (execution)-[r4]-(artifact:Artifact)
-#             OPTIONAL MATCH (artifact)-[r5]-(dataset:Dataset)
-#             OPTIONAL MATCH (artifact)-[r6]-(model:Model)
-#             OPTIONAL MATCH (artifact)-[r7]-(metric:Metric)
-#             OPTIONAL MATCH (pipeline)-[r8]-(framework:Framework)
-#             OPTIONAL MATCH (pipeline)-[r9]-(report:Report)
-#     """
-
-#     # Conditions list for AND combinations
-#     conditions = []
-
-#     if task != "None":
-#         conditions.append("task.name = '{}'".format(task))
-#     if dataset != "None":
-#         conditions.append("dataset.name = '{}'".format(dataset))
-#     if model != "None":
-#         conditions.append("model.name = '{}'".format(model))
-
-#     # Build the query based on AND conditions
-#     if conditions:
-#         query = base_query + " WHERE " + " AND ".join(conditions)
-#     else:
-#         query = base_query
-
-#     query += """ RETURN task, pipeline, stage, execution, artifact, dataset, model, metric, framework, report, 
-#     r1, r2, r3, r4, r5, r6, r7,r8, r9 LIMIT 300"""
-
-#     print("Generated AND Query:", query)
-#     return query
 
 
 def search_pipelines(query_task=None, query_dataset=None, query_model=None, query_type='OR'):
@@ -163,15 +144,6 @@ def search_pipelines(query_task=None, query_dataset=None, query_model=None, quer
         else:
             res_d3_graphs = neo4j_to_d3(results) 
             return res_d3_graphs
-
-    # if query_type == 'AND':
-    #     query_str = build_AND_query(task=query_task, dataset=query_dataset, model=query_model)
-    #     result = neo4j_obj.query(query_str)
-    #     if result is None:
-    #         return {'nodes':[], 'links':[]} 
-    #     else:
-    #         res_d3_graphs = neo4j_to_d3([result]) # expects list of neo4j results
-    #         return res_d3_graphs
     
 
 def search_custom_query(query_str):

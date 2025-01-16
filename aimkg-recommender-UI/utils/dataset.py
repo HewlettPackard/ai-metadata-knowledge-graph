@@ -1,4 +1,18 @@
-
+###
+# Copyright (2024) Hewlett Packard Enterprise Development LP
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# You may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+###
 
 
 
@@ -35,7 +49,6 @@ import h5py
 import glob
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-# DEVICE = torch.device("cpu")
 embedding_model = SentenceTransformer("all-mpnet-base-v2").to(DEVICE)
 
 load_dotenv()
@@ -218,4 +231,3 @@ def get_similar_datasets(query_dataset, num_res=3):
     print("Time Taken",time.time()-start_time)
     return result_items
 
-# get_similar_datasets("imagenet")

@@ -1,4 +1,18 @@
-
+###
+# Copyright (2024) Hewlett Packard Enterprise Development LP
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# You may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+###
 
 
 
@@ -34,7 +48,6 @@ import h5py
 import glob
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-# DEVICE = torch.device("cpu")
 embedding_model = SentenceTransformer("all-mpnet-base-v2").to(DEVICE)
 
 load_dotenv()
@@ -195,13 +208,6 @@ def get_category_sim(query_task, task_dict):
 
 def get_similar_tasks(query_task, num_res=3):
     start_time = time.time()
-    num_res=3
-    # check if we are able to calculate modality or category
-    # if there are values, then pass this as constraint and pick only those tasks for similarity computation
-    # Or, use the stored files and compute cosine similarity.. pick top 200 results and compute custom similarity only for those?
-    # have the option to include or exclude modality and category computation in similarity calculation if category and modality are not available
-    
-    # test - compute just embedding similarity from all the files
     task_dict = get_tasks()
 
 
@@ -217,29 +223,22 @@ def get_similar_tasks(query_task, num_res=3):
 
     query_embedding = torch.tensor(embedding_model.encode(str(query_task))).view(1, -1).to(DEVICE)
 
-    print(len(task_dict))
     cos_sim =  F.cosine_similarity(query_embedding, embeddings, dim=1)
     token_sim = torch.tensor(get_token_sim(query_task, task_dict)).to(DEVICE)
     modality_sim = torch.tensor(get_modality_sim(query_task, task_dict)).to(DEVICE)
     category_sim = torch.tensor(get_category_sim(query_task, task_dict)).to(DEVICE)
-    print(len(token_sim), len(modality_sim), len(category_sim))
 
     mean_sim = (cos_sim + token_sim + modality_sim + category_sim) / 4
 
     # Sort the tensor in descending order and get the indices
     sorted_tensor, sorted_indices = torch.sort(mean_sim, descending=True)
-    print("task.py", num_res)
+
     indices = sorted_indices[:num_res]
-    print(sorted_indices)
-    print(len(indices))
     top_task_ids = [task_ids[idx] for idx in indices]
     top_sim_scores = sorted_tensor[:num_res]
-    print("Len of top tasks:", len(top_task_ids))
     explanations = get_explanations(query_task, top_task_ids, top_sim_scores, task_dict)
     neo4j_results = get_result_pipelines(top_task_ids)
     result_d3_graphs = neo4j_to_d3(neo4j_results)
     result_items = {'nodes': result_d3_graphs['nodes'], 'links':result_d3_graphs['links'], 'explanations':explanations}
     print("Time Taken:",time.time()-start_time)
     return result_items
-
-# get_similar_tasks("medical image segmentation")

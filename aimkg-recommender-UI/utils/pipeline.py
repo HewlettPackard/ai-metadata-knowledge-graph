@@ -1,3 +1,20 @@
+###
+# Copyright (2024) Hewlett Packard Enterprise Development LP
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# You may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+###
+
+
 task_category_vocab = ['recognition', 'regression','reconstruction', 'segmentation', 'detection', 'generation', 'harmonization', 'translation', 'classification', 'adaptation', 'search', 'analysis',
 'extraction', 'retrieval', 'annotation', 'generalization', 'augmentation', 'anonymization', 'prediction', 'correlation', 'fusion', 'matching', 'synthesis', 'understanding',
 'testing', 'parsing', 'identification', 'transfer', 'spotting', 'estimation', 'resolution', 'clustering', 'separation', 'localization', 'summarization', 'reccommendation',
@@ -192,12 +209,6 @@ def get_similar_pipelines(query_pipeline, num_res=10):
     print("similar pipeline function called")
     start_time = time.time()
     num_res=3
-    # check if we are able to calculate modality or category
-    # if there are values, then pass this as constraint and pick only those tasks for similarity computation
-    # Or, use the stored files and compute cosine similarity.. pick top 200 results and compute custom similarity only for those?
-    # have the option to include or exclude modality and category computation in similarity calculation if category and modality are not available
-    
-    # test - compute just embedding similarity from all the files
     pipeline_dict = get_pipelines()
 
 
@@ -234,5 +245,3 @@ def get_similar_pipelines(query_pipeline, num_res=10):
     # print(result_items)
     print("Time Taken:",time.time()-start_time)
     return result_items
-
-# get_similar_pipelines("medical image segmentation")

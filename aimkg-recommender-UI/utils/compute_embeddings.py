@@ -1,8 +1,23 @@
+###
+# Copyright (2024) Hewlett Packard Enterprise Development LP
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# You may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+###
+
 """
 This needs to be executed once when we set up the demo
 This script computes embeddings for all the task, dataset, model, pipeline_title and pipeline_abstracts
 """
-# TODO - store emebddings in secondary storage
 
 from neo4j_connection import Neo4jConnection
 from dotenv import load_dotenv
@@ -33,10 +48,6 @@ EMBED_DIM=768
 class ComputeEmbeddings():
     def __init__(self, model):
         self.embedding_model = model
-        # Wrap the model with DataParallel to use multiple GPUs
-        # self.embedding_model = torch.nn.DataParallel(self.embedding_model)
-        # Set the model to evaluation mode
-        # self.embedding_model.eval()
     
     def create_tokens(self, item_name):
         tokens_ = item_name.split(" ")
@@ -73,8 +84,6 @@ class ComputeEmbeddings():
             task_ids.append(item_id)
             embedding = torch.tensor(self.embedding_model.encode(str(name))).cpu()
             task_embeds.append(embedding)
-                # filepath = os.path.join('task_embeddings', str(item_id) + '.pt')
-                # torch.save(embedding, filepath)
             
         with h5py.File('task_embeddings_all.h5', 'w') as f:
             f.create_dataset('embedding_ids', data=np.array(task_ids, dtype='S32'))  # Store as fixed-length byte strings
@@ -95,8 +104,6 @@ class ComputeEmbeddings():
             name = curr_item['name']
             embedding = torch.tensor(self.embedding_model.encode(str(name))).cpu()
             embeddings.append(embedding)
-                # filepath = os.path.join('dataset_embeddings', str(item_id) + '.pt')
-                # torch.save(embedding, filepath)
         
         with h5py.File('dataset_embeddings_all.h5', 'w') as f:
             f.create_dataset('embedding_ids', data=np.array(dataset_ids, dtype='S32'))  # Store as fixed-length byte strings
@@ -114,8 +121,6 @@ class ComputeEmbeddings():
             item_id = curr_item['itemID']
             name = curr_item['name']
             embedding = torch.tensor(self.embedding_model.encode(str(name))).cpu()
-            # filepath = os.path.join('model_embeddings', str(item_id) + '.pt')
-            # torch.save(embedding, filepath)
             model_ids.append(item_id)
             embeddings.append(embedding)
 
