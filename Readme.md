@@ -25,7 +25,7 @@ The construction details of AIMKG and recommendation can be below in the next se
 * * Change the $USER and $UID in .env file. To find out the values `echo $USER` and `echo $UID` from your command terminal
 * Create a virtual environment `python3 -m venv <myenv>` and activate it using `source <myenv>/bin/activate`
 * Run `pip install -r requirements.txt`
-* Download the sample dataset for AIMKG from [here]() and put it into a folder named `raw_files`
+* Download the sample dataset for AIMKG from [here](https://drive.google.com/drive/folders/1FcUOe98w7Mlcfg49icSAuCdFh-PH72GE?usp=sharing) and put it into a folder named `raw_files`
 * Create another folder named `graph_data` where the graph database will be created
 * Download the neo4j plugin [apoc-5.16.0-extended.jar](https://drive.google.com/file/d/12iVJVKnC4H-dYCx_-vhaKJwk9zzpXWzy/view?usp=sharing) and put it into a folder named `plugins`.
 * Mention these paths in the docker-compose.yml file. Mention full path.
