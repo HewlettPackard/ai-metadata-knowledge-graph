@@ -18,24 +18,29 @@ The emergence of advanced Artificial Intelligence (AI) models has driven the dev
 
 
 ### AIMKG Set up Guide
-The construction details of AIMKG and recommendation can be below in the next sections. To set up AIMKG, please follow the steps below.
+The construction details of AIMKG and recommendation can be found below in the next sections. To set up AIMKG, please follow the steps below.
 
 * Download the most recent version of docker as per your OS from here - https://docs.docker.com/desktop/release-notes/ and install the docker on your system
 * Navigate to AIMKG folder and modify the parameters in .env file
 * * Change the $USER and $UID in .env file. To find out the values `echo $USER` and `echo $UID` from your command terminal
 * Create a virtual environment `python3 -m venv <myenv>` and activate it using `source <myenv>/bin/activate`
 * Run `pip install -r requirements.txt`
-* Download the sample dataset for AIMKG from [here](https://drive.google.com/drive/folders/1FcUOe98w7Mlcfg49icSAuCdFh-PH72GE?usp=sharing) and put it into a folder named `raw_files`
-* Create another folder named `graph_data` where the graph database will be created
+* Create a folder named `graph_data` where the graph database will be created
 * Download the neo4j plugin [apoc-5.16.0-extended.jar](https://drive.google.com/file/d/12iVJVKnC4H-dYCx_-vhaKJwk9zzpXWzy/view?usp=sharing) and put it into a folder named `plugins`.
+* Download the sample dataset (dataset-small.zip) for AIMKG from [here](https://drive.google.com/drive/folders/1FcUOe98w7Mlcfg49icSAuCdFh-PH72GE?usp=sharing). Unzip it and put it into a folder named `raw_files`. The folder should look like `raw_data/nodes` and `raw_data/relationships`
 * Mention these paths in the docker-compose.yml file. Mention full path.
 * * `<path to raw_folder>:/import`
 * * `<path to graph_data>:/data`
 * * `<path to plugins>:/var/lib/neo4j/plugins`
 * Command to stand up the docker container `docker compose up --build`
 * Access the notebook and neo4j from ports `https://localhost:8888` and `https://localhost:7474` respectively. 
-* Run the notebooks to ingest data into the graph database
+* Run the notebook named `small_dataset.ipynb` to ingest data into the graph database
 * The graph can be explored with the sample queries given below
+
+#### Datasets 
+* If you are downloading `dataset-large.zip`, execute notebooks `pwc_kg.ipynb, openml_kg.ipynb and hf_kg.ipynb` IN THAT ORDER. The folder should look like `raw_data/pwc`, `raw_data/open-ml` and `raw_data/huggignface`
+* If you are directly downloading neo4j_dump.zip, unzip it and put this data into `graph_data` folder and leave `raw_data` folder empty. With data already in neo4j format, you can directl execute the sample queries below from neo4j browser. There is no need to execute any notebooks
+
 
 #### Sample Queries
 Following are some sample queries that can be run to test and visualize the data
