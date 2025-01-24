@@ -21,7 +21,7 @@ The emergence of advanced Artificial Intelligence (AI) models has driven the dev
 The construction details of AIMKG and recommendation can be found below in the next sections. To set up AIMKG, please follow the steps below.
 
 * Download the most recent version of docker as per your OS from here - https://docs.docker.com/desktop/release-notes/ and install the docker on your system
-* Navigate to AIMKG folder and modify the parameters in .env file
+* Navigate to `ai-pipeline-knowledge-graph` folder and modify the parameters in .env file. Create a .env file using env-example
 * * Change the $USER and $UID in .env file. To find out the values `echo $USER` and `echo $UID` from your command terminal
 * Create a virtual environment `python3 -m venv <myenv>` and activate it using `source <myenv>/bin/activate`
 * Run `pip install -r requirements.txt`
