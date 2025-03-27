@@ -1,18 +1,4 @@
-###
-# Copyright (2024) Hewlett Packard Enterprise Development LP
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# You may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-# http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-###
+
 
 
 
@@ -48,10 +34,11 @@ import h5py
 import glob
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+# DEVICE = torch.device("cpu")
 embedding_model = SentenceTransformer("all-mpnet-base-v2").to(DEVICE)
 
 load_dotenv()
-URI = 'bolt://localhost:7687'
+URI = os.getenv("NEO4J_URI", "bolt://localhost:7687")
 USER = os.getenv("NEO4J_USER_NAME")
 PASSWORD = os.getenv("NEO4J_PASSWD")
 AUTH = (os.getenv("NEO4J_USER_NAME"), os.getenv("NEO4J_PASSWD"))
@@ -205,9 +192,22 @@ def get_category_sim(query_task, task_dict):
         sims.append(compute_IOU(query_category.split(","), task_dict[id]['category'].split(",")))
     return sims
 
+def get_task_nodes(task_id):
+    get_task_nodes= """MATCH (n:Task {itemID:$id}) RETURN properties(n)""" 
+    parameters = {'id':task_id}
+    res = neo4j_obj.query(get_task_nodes, parameters)
+    task_dict = convert_json(res)
+    return task_dict
 
 def get_similar_tasks(query_task, num_res=3):
     start_time = time.time()
+    num_res=3
+    # check if we are able to calculate modality or category
+    # if there are values, then pass this as constraint and pick only those tasks for similarity computation
+    # Or, use the stored files and compute cosine similarity.. pick top 200 results and compute custom similarity only for those?
+    # have the option to include or exclude modality and category computation in similarity calculation if category and modality are not available
+    
+    # test - compute just embedding similarity from all the files
     task_dict = get_tasks()
 
 
@@ -232,7 +232,7 @@ def get_similar_tasks(query_task, num_res=3):
 
     # Sort the tensor in descending order and get the indices
     sorted_tensor, sorted_indices = torch.sort(mean_sim, descending=True)
-
+    print("task.py", num_res)
     indices = sorted_indices[:num_res]
     top_task_ids = [task_ids[idx] for idx in indices]
     top_sim_scores = sorted_tensor[:num_res]
@@ -241,4 +241,9 @@ def get_similar_tasks(query_task, num_res=3):
     result_d3_graphs = neo4j_to_d3(neo4j_results)
     result_items = {'nodes': result_d3_graphs['nodes'], 'links':result_d3_graphs['links'], 'explanations':explanations}
     print("Time Taken:",time.time()-start_time)
-    return result_items
+    similar_item_dict = []
+    for id in top_task_ids:
+        similar_item_dict.append(get_task_nodes(id))
+    return result_items, similar_item_dict
+
+# get_similar_tasks("medical image segmentation")

@@ -1,18 +1,4 @@
-###
-# Copyright (2024) Hewlett Packard Enterprise Development LP
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# You may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-# http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-###
+
 
 
 
@@ -49,10 +35,11 @@ import h5py
 import glob
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+# DEVICE = torch.device("cpu")
 embedding_model = SentenceTransformer("all-mpnet-base-v2").to(DEVICE)
 
 load_dotenv()
-URI = 'bolt://localhost:7687'
+URI = os.getenv("NEO4J_URI", "bolt://localhost:7687")
 USER = os.getenv("NEO4J_USER_NAME")
 PASSWORD = os.getenv("NEO4J_PASSWD")
 AUTH = (os.getenv("NEO4J_USER_NAME"), os.getenv("NEO4J_PASSWD"))
@@ -130,12 +117,17 @@ def convert_json(result):
     return data_dict
 
 def get_datasets():
-    get_task_nodes= """MATCH (n:Dataset) RETURN properties(n)""" 
-    res = neo4j_obj.query(get_task_nodes)
-    task_dict = convert_json(res)
-    return task_dict
+    get_dataset_nodes= """MATCH (n:Dataset) RETURN properties(n)""" 
+    res = neo4j_obj.query(get_dataset_nodes)
+    dataset_dict = convert_json(res)
+    return dataset_dict
 
-
+def get_dataset_nodes(dataset_id):
+    get_dataset_nodes= """MATCH (n:Dataset {itemID:$id}) RETURN properties(n)""" 
+    parameters = {'id':dataset_id}
+    res = neo4j_obj.query(get_dataset_nodes, parameters)
+    dataset_dict = convert_json(res)
+    return dataset_dict
 
 def get_result_pipelines(dataset_ids):
     """
@@ -229,5 +221,9 @@ def get_similar_datasets(query_dataset, num_res=3):
     result_d3_graphs = neo4j_to_d3(neo4j_results)
     result_items = {'nodes': result_d3_graphs['nodes'], 'links':result_d3_graphs['links'], 'explanations':explanations}
     print("Time Taken",time.time()-start_time)
-    return result_items
+    similar_item_dict = []
+    for id in top_ids:
+        similar_item_dict.append(get_dataset_nodes(id))
+    return result_items, similar_item_dict
 
+# get_similar_datasets("imagenet")

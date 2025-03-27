@@ -29,7 +29,7 @@ import h5py
 import numpy as np
 
 load_dotenv()
-URI = 'bolt://localhost:7687'
+URI = os.getenv("NEO4J_URI", "bolt://localhost:7687")
 USER = os.getenv("NEO4J_USER_NAME")
 PASSWORD = os.getenv("NEO4J_PASSWD")
 AUTH = (os.getenv("NEO4J_USER_NAME"), os.getenv("NEO4J_PASSWD"))

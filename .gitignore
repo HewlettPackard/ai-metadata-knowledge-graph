@@ -6,6 +6,7 @@ ai-pipeline-knowledge-graph/.env
 
 aimkg-recommender-UI/__pycache__
 aimkg-recommender-UI/utils/*.h5
+aimkg-recommender-UI/utils/__pycache__
 aimkg-recommender-UI/.env
 
 # Temp files
@@ -25,4 +26,5 @@ huggingface/myenv
 
 GraphLearning
 
+.env
 

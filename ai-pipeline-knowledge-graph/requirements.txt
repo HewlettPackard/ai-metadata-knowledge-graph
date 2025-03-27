@@ -10,6 +10,5 @@ inflect
 tqdm
 pandas
 inflect
-csv
 spacy
 openpyxl

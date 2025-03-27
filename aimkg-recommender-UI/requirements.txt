@@ -4,3 +4,4 @@ python-dotenv
 pandas
 sentence-transformers
 torch
+h5py

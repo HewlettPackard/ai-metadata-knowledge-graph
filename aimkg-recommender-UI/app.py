@@ -1,25 +1,12 @@
-###
-# Copyright (2024) Hewlett Packard Enterprise Development LP
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# You may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-# http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-###
-
-
 from flask import Flask, request, jsonify, render_template
 from utils.recommend import get_recommendations
 import utils.search_graph as search_graph
 import os
 import json
+
+import logging
+# logging.basicConfig(level=logging.DEBUG)
+# logger = logging.getLogger(__name__)
 
 # Get the prepoluated values and keep it ready
 print("Getting dropdown values..")
@@ -53,8 +40,10 @@ def recommend_graphs():
     print("app.py",num_reco)
 
     # Process the recommendation-specific query
-    results = get_recommendations(query_task=task, query_dataset=dataset, query_model=model, query_pipeline=pipeline, num_res=num_reco, sim_threshold=0.1)
+    results, results_readable = get_recommendations(query_task=task, query_dataset=dataset, query_model=model, query_pipeline=pipeline, num_res=num_reco, sim_threshold=0.1)
     print("Recommendation query processed")
+    print(results_readable)
+    # json_data = json.dumps(results, sort_keys=False)  # Prevents alphabetical sorting
     return jsonify(results)
 
 
@@ -89,4 +78,5 @@ def search_cypher_query():
     return jsonify(d3_graphs)
 
 if __name__ == '__main__':
-    app.run(debug=True, port=9089, extra_files=['templates/recommendation.html', 'templates/search.html', 'static/css/styles.css', 'static/js/graph.js','static/js/list.js'])
+    #app.run(debug=True, port=9089, extra_files=['templates/recommendation.html', 'templates/search.html', 'static/css/styles.css', 'static/js/graph.js','static/js/list.js'])
+    app.run(debug=False, port=9089, host='0.0.0.0', extra_files=['templates/recommendation.html', 'templates/search.html', 'static/css/styles.css', 'static/js/graph.js','static/js/list.js'])

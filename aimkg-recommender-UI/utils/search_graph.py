@@ -22,7 +22,7 @@ import random
 from .d3_graph import neo4j_to_d3
 
 load_dotenv()
-URI = 'bolt://localhost:7687'
+URI = os.getenv("NEO4J_URI", "bolt://localhost:7687")
 USER = os.getenv("NEO4J_USER_NAME")
 PASSWORD = os.getenv("NEO4J_PASSWD")
 AUTH = (os.getenv("NEO4J_USER_NAME"), os.getenv("NEO4J_PASSWD"))

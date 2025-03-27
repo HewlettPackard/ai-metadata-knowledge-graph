@@ -1,20 +1,3 @@
-###
-# Copyright (2024) Hewlett Packard Enterprise Development LP
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# You may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-# http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-###
-
-
 task_category_vocab = ['recognition', 'regression','reconstruction', 'segmentation', 'detection', 'generation', 'harmonization', 'translation', 'classification', 'adaptation', 'search', 'analysis',
 'extraction', 'retrieval', 'annotation', 'generalization', 'augmentation', 'anonymization', 'prediction', 'correlation', 'fusion', 'matching', 'synthesis', 'understanding',
 'testing', 'parsing', 'identification', 'transfer', 'spotting', 'estimation', 'resolution', 'clustering', 'separation', 'localization', 'summarization', 'reccommendation',
@@ -52,7 +35,7 @@ DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 embedding_model = SentenceTransformer("all-mpnet-base-v2").to(DEVICE)
 
 load_dotenv()
-URI = 'bolt://localhost:7687'
+URI = os.getenv("NEO4J_URI", "bolt://localhost:7687")
 USER = os.getenv("NEO4J_USER_NAME")
 PASSWORD = os.getenv("NEO4J_PASSWD")
 AUTH = (os.getenv("NEO4J_USER_NAME"), os.getenv("NEO4J_PASSWD"))
@@ -132,11 +115,17 @@ def convert_json(result):
     return data_dict
 
 def get_pipelines():
-    get_task_nodes= """MATCH (n:Pipeline) RETURN properties(n)""" 
-    res = neo4j_obj.query(get_task_nodes)
+    get_pipeline_nodes= """MATCH (n:Pipeline) RETURN properties(n)""" 
+    res = neo4j_obj.query(get_pipeline_nodes)
     data_dict = convert_json(res)
     return data_dict
 
+def get_pipeline_node(id):
+    get_pipeline_nodes= """MATCH (n:Pipeline {itemID:$id}) RETURN properties(n)"""
+    parameters = {'id':id}
+    res = neo4j_obj.query(get_pipeline_nodes, parameters)
+    data_dict = convert_json(res)
+    return data_dict
 
 
 def get_result_pipelines(pipeline_ids):
@@ -209,6 +198,12 @@ def get_similar_pipelines(query_pipeline, num_res=10):
     print("similar pipeline function called")
     start_time = time.time()
     num_res=3
+    # check if we are able to calculate modality or category
+    # if there are values, then pass this as constraint and pick only those tasks for similarity computation
+    # Or, use the stored files and compute cosine similarity.. pick top 200 results and compute custom similarity only for those?
+    # have the option to include or exclude modality and category computation in similarity calculation if category and modality are not available
+    
+    # test - compute just embedding similarity from all the files
     pipeline_dict = get_pipelines()
 
 
@@ -244,4 +239,9 @@ def get_similar_pipelines(query_pipeline, num_res=10):
     result_items = {'nodes': result_d3_graphs['nodes'], 'links':result_d3_graphs['links'], 'explanations':explanations}
     # print(result_items)
     print("Time Taken:",time.time()-start_time)
-    return result_items
+    similar_item_dict = []
+    for id in top_pipeline_ids:
+        similar_item_dict.append(get_pipeline_node(id))
+    return result_items, similar_item_dict
+
+# get_similar_pipelines("medical image segmentation")
