@@ -1,0 +1,10 @@
+USER=first
+UID=123456789
+GROUP=users
+GID=100
+NEO4J_USER_NAME=neo4j
+NEO4J=TRUE
+NEO4J_PASSWD=twine-grooves-accelerations
+HTTP_PROXY=http://proxy.mycorp.mycorp.net:8080
+HTTPS_PROXY=http://proxy.mycorp.mycorp.net:8080
+JUPYTER_TOKEN=XXXX

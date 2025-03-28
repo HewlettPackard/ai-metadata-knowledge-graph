@@ -178,6 +178,16 @@ curl -X POST http://localhost:9089/search/cypher_query \
 }' | jq
 ```
 
+### Running AI-MKG neo4J, Jupyterlab Notebook server and AIMKG-recommender-UI together
+* Navigate to the root of the repository i.e. `./aimkg-recommender-UI`
+* Create a `.env` file and update it per the template in `./env-example`
+* Run `docker-compose up -d --build` 
+  ** This will expose JupyterLab Notebook Server at http://localhost:8888/lab
+  ** This will expose Neo4J Graph DB at http://localhost:7474/browser
+  ** This will expose AIMKG-recommender webserver and UI at http://http://localhost:9089/ 
+  ** Neo4J will start first and once healthy will be followed by JupyterLab and AIMKG-recommender
+  ** Endpoints for API requests will be available as in the Table above
+  
 ### Full Paper
 The full paper along with supplementary materials can be found here [Constructing a metadata knowledge graph as an atlas for demystifying AI pipeline optimization](https://www.frontiersin.org/journals/big-data/articles/10.3389/fdata.2024.1476506/full)
 
