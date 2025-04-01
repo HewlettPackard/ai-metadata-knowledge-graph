@@ -25,8 +25,7 @@ The construction details of AIMKG and recommendation can be found below in the n
 * Create a virtual environment `python3 -m venv <myenv>` and activate it using `source <myenv>/bin/activate` or `conda create -n aimkg python=3.9` and activate it `conda activate aimkg`
 * Run `pip install -r requirements.txt`
 * Create a folder named `$HOME/graph_data` where the neo4J graph database will be created
-* Create a folder named `$HOME/neo4j_plugins`. 
-Download the neo4j plugin [apoc-5.16.0-extended.jar](https://github.com/neo4j-contrib/neo4j-apoc-procedures/releases/download/5.16.0/apoc-5.16.0-extended.jar) or (https://drive.google.com/file/d/12iVJVKnC4H-dYCx_-vhaKJwk9zzpXWzy/view?usp=sharing) and put it into the folder named `$HOME/neo4j_plugins`.
+* Create a folder named `$HOME/neo4j_plugins`. This is where Neo4J will place any custom plugins it uses. Plugins apoc and apoc-extended are used in ths project. These are automatically downloaded when neo4J starts to `$HOME/neo4j_plugins`.
 * Create a folder named `$HOME/raw_files` where the neo4j source data will be stored
 * Download the sample dataset (dataset-small.zip) for AIMKG from [here](https://drive.google.com/drive/folders/1FcUOe98w7Mlcfg49icSAuCdFh-PH72GE?usp=sharing). Unzip into a folder named `raw_files`. `unzip dataset-small.zip -d $HOME/raw_files`. The resulting folder should have `$HOME/raw_files/nodes` and `$HOME/raw_files/relationships`
 * Update the paths used in the docker-compose.yml file. Mention full path. For example: 
@@ -43,7 +42,7 @@ Download the neo4j plugin [apoc-5.16.0-extended.jar](https://github.com/neo4j-co
 * We have provided three kinds of datasets: 
 * Small dataset is [`dataset-small.zip`](https://drive.google.com/file/d/1JEdhTNE2OmZLcXrNqzg91srSF11zsfi5/view?usp=drive_link) This is a small randomly selected subset of all open source data. This is loaded by running the notebook: `small_dataset.ipynb` 
 * Full dataset is [`dataset-large.zip`](https://drive.google.com/file/d/1kDExDrVAXC6fqJvc4PLW3L45slDMavvV/view?usp=drive_link). This is loaded by running the notebook s `pwc_kg.ipynb, openml_kg.ipynb and hf_kg.ipynb` IN THAT ORDER. The `$HOME/raw_files` folder should look like `raw_files/pwc`, `raw_files/open-ml` and `raw_files/huggingface`
-* Neo4J Dump: This the state of the neo4J database after the full database is loaded. This can be directly used by downloading neo4j_dump.zip, unzip it and put this data into `$HOME/graph_data` folder (leave `$HOME/raw_files` folder empty. Since the data is already in the neo4J format, you can directly execute the sample queries [Sample Queries](#sample-queries) below in the neo4j browser. There is no need to execute any notebooks in that case. 
+* Neo4J Dump: This the state of the neo4J database after the full database is loaded. This can be directly used by downloading [`neo4j_dump.zip`](https://drive.google.com/file/d/1ptuN0PEb2lBV9N-l-rZwwJz4IS0cFs1L/view?usp=drive_link), unzip it and put this data into `$HOME/graph_data` folder (leave `$HOME/raw_files` folder empty. After extraction the folder should look like `graph_data/databases`, `graph_data/dbms`, `graph_data/transactions`. Since the data is already in the neo4j format, you can directly execute the sample queries [Sample Queries](#sample-queries) below in the neo4j browser. There is no need to execute any notebooks in that case. 
 
 
 #### Sample Queries to explore AIMKG manually

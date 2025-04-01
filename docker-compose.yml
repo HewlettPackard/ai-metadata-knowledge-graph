@@ -42,7 +42,7 @@ services:
     user: "$UID:$GID"
     environment:
       - NEO4J_AUTH=${NEO4J_USER_NAME}/${NEO4J_PASSWD}
-      - NEO4J_PLUGINS=["apoc"]
+      - NEO4J_PLUGINS=["apoc","apoc-extended"]
       - apoc.import.file.enabled=true
       - apoc.export.file.enabled=true
       - apoc.export.json.all=true
@@ -57,10 +57,10 @@ services:
       - neo_net_kg
     healthcheck:
       test: wget http://localhost:7474 || exit 1
-      interval: 1s
-      timeout: 10s
-      retries: 200
-      start_period: 3s
+      interval: 5s
+      timeout: 20s
+      retries: 50
+      start_period: 10s
 
   jupyterlab:
     build:
